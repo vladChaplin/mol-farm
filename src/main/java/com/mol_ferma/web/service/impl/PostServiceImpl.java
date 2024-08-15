@@ -21,16 +21,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> findAllPosts() {
+    public List<Post> findAllPosts() {
         List<Post> posts = postRepository.findAll();
-        return posts.stream()
-                .map(this::mapToPostDto)
-                .collect(Collectors.toList());
+        return posts;
     }
 
     @Override
-    public Post savePost(PostDto postDto) {
-        return postRepository.save(mapToPost(postDto));
+    public Post savePost(PostDto postDto, String photoUrl) {
+        return postRepository.save(mapToPost(postDto, photoUrl));
     }
 
     @Override
@@ -40,15 +38,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void updatePost(PostDto postDto) {
-        Post post = mapToPost(postDto);
+    public void updatePost(PostDto postDto, String photoUrl) {
+        Post post = mapToPost(postDto, photoUrl);
         postRepository.save(post);
     }
 
-    private Post mapToPost(PostDto postDto) {
+    private Post mapToPost(PostDto postDto, String photoUrl) {
         return Post.builder()
                 .id(postDto.getId())
                 .title(postDto.getTitle())
+                .photoUrl(photoUrl)
                 .content(postDto.getContent())
                 .address(postDto.getAddress())
                 .updatedOn(postDto.getUpdatedOn())
@@ -62,7 +61,6 @@ public class PostServiceImpl implements PostService {
                 .address(post.getAddress())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .photoUrl(post.getPhotoUrl())
                 .createdOn(post.getCreatedOn())
                 .updatedOn(post.getUpdatedOn())
                 .build();

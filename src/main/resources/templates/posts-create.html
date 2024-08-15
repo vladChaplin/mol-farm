@@ -14,7 +14,7 @@
     <h5 class="card-title fw-semibold mb-4">Для добавления фермы заполните данные</h5>
     <div class="card">
         <div class="card-body">
-            <form role="form" method="post" th:action="@{/posts/new}" th:ac th:object="${post}">
+            <form role="form" enctype="multipart/form-data" method="post" th:action="@{/posts/new}" th:ac th:object="${post}">
                 <div class="mb-3">
                     <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger" role="alert"></div>
                     <label for="title" class="form-label">Название фермы</label>

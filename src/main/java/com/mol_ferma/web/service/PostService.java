@@ -8,8 +8,8 @@ import java.util.List;
 
 @Service
 public interface PostService {
-    List<PostDto> findAllPosts();
-    Post savePost(PostDto postDto);
+    List<Post> findAllPosts();
+    Post savePost(PostDto postDto, String photoUrl);
     PostDto findPostById(Long postId);
-    void updatePost(PostDto post);
+    void updatePost(PostDto postDto, String photoUrl);
 }

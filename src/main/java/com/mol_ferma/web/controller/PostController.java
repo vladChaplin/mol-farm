@@ -5,19 +5,33 @@ import com.mol_ferma.web.models.Post;
 import com.mol_ferma.web.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 public class PostController {
 
+    @Value("${file.storage.path-full.img}")
+    private String fileStoragePathFull;
+    @Value("${file.storage.path-project.img}")
+    private String fileStoragePathImg;
     private final PostService postService;
 
     @Autowired
@@ -27,7 +41,7 @@ public class PostController {
 
     @GetMapping("/posts")
     public String listPosts(Model model) {
-        List<PostDto> posts = postService.findAllPosts();
+        List<Post> posts = postService.findAllPosts();
         model.addAttribute("posts", posts);
         return "posts-list";
     }
@@ -43,12 +57,39 @@ public class PostController {
     public String saveNewPost(@Valid @ModelAttribute("post") PostDto postDto,
                               BindingResult result,
                               Model model) {
+
+        if(postDto.getPhotoUrl().isEmpty()) {
+            result.addError(new FieldError("postDto", "photoUrl", "Необходимо выбрать изображение фермы!"));
+        }
+
         if(result.hasErrors()) {
             model.addAttribute("post", postDto);
             return "posts-create";
         }
 
-        postService.savePost(postDto);
+
+        MultipartFile image = postDto.getPhotoUrl();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        StringBuilder storageFileName = new StringBuilder(fileStoragePathFull);
+        storageFileName.append(localDateTime.getSecond())
+                .append("_").append(image.getOriginalFilename());;
+
+        try {
+            Path uploadPath = Paths.get(storageFileName.toString());
+            fileStoragePathImg += uploadPath.getFileName();
+
+            if(!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            try(InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, uploadPath, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        postService.savePost(postDto, fileStoragePathImg);
         return "redirect:/posts";
     }
 
@@ -69,7 +110,7 @@ public class PostController {
         }
 
         post.setId(postId);
-        postService.updatePost(post);
+//        postService.updatePost(post);
         return "redirect:/posts";
     }
 }
