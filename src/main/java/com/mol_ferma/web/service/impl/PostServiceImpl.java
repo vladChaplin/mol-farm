@@ -24,16 +24,39 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> findAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
-                .map(this::mapToPost)
+                .map(this::mapToPostDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Post savePost(Post post) {
-        return postRepository.save(post);
+    public Post savePost(PostDto postDto) {
+        return postRepository.save(mapToPost(postDto));
     }
 
-    private PostDto mapToPost(Post post) {
+    @Override
+    public PostDto findPostById(Long postId) {
+        Post post = postRepository.findById(postId).get();
+        return mapToPostDto(post);
+    }
+
+    @Override
+    public void updatePost(PostDto postDto) {
+        Post post = mapToPost(postDto);
+        postRepository.save(post);
+    }
+
+    private Post mapToPost(PostDto postDto) {
+        return Post.builder()
+                .id(postDto.getId())
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .address(postDto.getAddress())
+                .updatedOn(postDto.getUpdatedOn())
+                .build();
+    }
+
+
+    private PostDto mapToPostDto(Post post) {
         PostDto postDto = PostDto.builder()
                 .id(post.getId())
                 .address(post.getAddress())

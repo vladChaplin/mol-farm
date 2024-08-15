@@ -16,6 +16,7 @@
         <div class="card-body">
             <form role="form" method="post" th:action="@{/posts/new}" th:ac th:object="${post}">
                 <div class="mb-3">
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger" role="alert"></div>
                     <label for="title" class="form-label">Название фермы</label>
                     <input
                             type="text"
@@ -24,7 +25,7 @@
                             name="title"
                             th:field="*{title}"
                             aria-describedby="titleHelp"
-                            required>
+                            >
                     <div id="titleHelp" class="form-text">Введите подробное название фермы, пример: ООО Ферма
                         Алма
                     </div>
@@ -37,9 +38,11 @@
                             id="photoUrl"
                             name="photoUrl"
                             th:field="*{photoUrl}"
-                            accept="image/*">
+                            accept="image/*"
+                            required>
                 </div>
                 <div class="mb-3">
+                    <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="alert alert-danger" role="alert"></div>
                     <label for="address" class="form-label">Адрес</label>
                     <input
                             type="text"
@@ -48,10 +51,11 @@
                             name="address"
                             th:field="*{address}"
                             aria-describedby="addressHelp"
-                            required>
+                            >
                     <div id="addressHelp" class="form-text">Введите полный адрес, где находится ферма</div>
                 </div>
                 <div class="mb-3">
+                    <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="alert alert-danger" role="alert"></div>
                     <label for="content" class="form-label">Подробная информация</label>
                     <textarea
                             type="text"
@@ -62,7 +66,7 @@
                             rows="3"
                             maxlength="350"
                             aria-describedby="infoHelp"
-                            required>
+                            >
                             </textarea>
                     <div id="infoHelp" class="form-text">Опишите ферму, что из урожая есть, овощи, фрукты и
                         т.п.

@@ -9,5 +9,7 @@ import java.util.List;
 @Service
 public interface PostService {
     List<PostDto> findAllPosts();
-    Post savePost(Post post);
+    Post savePost(PostDto postDto);
+    PostDto findPostById(Long postId);
+    void updatePost(PostDto post);
 }
