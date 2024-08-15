@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Фермы - Алматинская область</title>
-    <link rel="shortcut icon" type="image/png" href="/assets/images/logos/favicon.png" />
-    <link rel="stylesheet" href="/assets/css/styles.min.css" />
 </head>
 
 <body>
 <!--  Body Wrapper -->
-<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+<div layout:fragment="body" class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
     <aside class="left-sidebar">
         <!-- Sidebar scroll-->
         <div>
-            <div class="brand-logo d-flex align-items-center justify-content-between">
+            <div class="brand-logo d-flex align-items-center justify-content-between mb-3">
                 <a href="./index.html" class="text-nowrap logo-img">
                     <img src="/assets/images/logos/logo-almaty.png" width="180" alt="logo almaty" />
                 </a>
@@ -35,9 +34,6 @@
                 </span>
                             <span class="hide-menu">Доступные фермы</span>
                         </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
@@ -101,15 +97,15 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <h3 class="card-title fw-semibold mb-4">Фермы на которых имеется урожай</h3>
-                            <h3 class="card-title fw-semibold mb-4">Алматинская область</h3>
+                        <h3 class="card-title fw-semibold mb-4">Фермы на которых имеется урожай</h3>
+                        <h3 class="card-title fw-semibold mb-4">Алматинская область</h3>
+                        <div th:each="post :${posts}" class="row">
                             <div class="card">
-                                <img src="../assets/images/products/s4.jpg" class="card-img-top" alt="...">
+                                <img th:src="${post.getPhotoUrl()}" class="card-img-top" alt="Изображение фермы">
                                 <div class="card-body">
-                                    <h5 class="card-title">Ферма <span th:text="'Балхаш ООО'"></span></h5>
-                                    <p class="card-text">Адрес: <span th:text="'Куркова д3'"></span></p>
-                                    <p class="card-text">Тел: <span th:text="'+77474545454'"></span></p>
+                                    <h5 class="card-title">Ферма <span th:text="${post.getTitle()}"></span></h5>
+                                    <p class="card-text">Адрес: <span th:text="${post.getAddress()}"></span></p>
+                                    <p class="card-text">Тел: <span th:text="${post.getContent()}"></span></p>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                                         <a href="#" class="btn btn-success">Подробнее</a>
                                         <a href="#" class="btn btn-info">Обновить</a>
@@ -143,13 +139,7 @@
         </div>
     </div>
 </div>
-<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/js/sidebarmenu.js"></script>
-<script src="/assets/js/app.min.js"></script>
-<script src="/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-<script src="/assets/libs/simplebar/dist/simplebar.js"></script>
-<script src="/assets/js/dashboard.js"></script>
+
 </body>
 
 </html>
