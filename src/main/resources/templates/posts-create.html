@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <title>Добавь новую ферму - Алматинская область</title>
+</head>
+
+<body>
+    <div layout:fragment="body" class="container-fluid">
+
+    <h5 class="card-title fw-semibold mb-4">Для добавления фермы заполните данные</h5>
+    <div class="card">
+        <div class="card-body">
+            <form role="form" method="post" th:action="@{/posts/new}" th:ac th:object="${post}">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Название фермы</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            th:field="*{title}"
+                            aria-describedby="titleHelp"
+                            required>
+                    <div id="titleHelp" class="form-text">Введите подробное название фермы, пример: ООО Ферма
+                        Алма
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="photoUrl" class="form-label">Выберите фотографию фермы</label>
+                    <input
+                            class="form-control"
+                            type="file"
+                            id="photoUrl"
+                            name="photoUrl"
+                            th:field="*{photoUrl}"
+                            accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Адрес</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="address"
+                            name="address"
+                            th:field="*{address}"
+                            aria-describedby="addressHelp"
+                            required>
+                    <div id="addressHelp" class="form-text">Введите полный адрес, где находится ферма</div>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Подробная информация</label>
+                    <textarea
+                            type="text"
+                            class="form-control"
+                            id="content"
+                            name="content"
+                            th:field="*{content}"
+                            rows="3"
+                            maxlength="350"
+                            aria-describedby="infoHelp"
+                            required>
+                            </textarea>
+                    <div id="infoHelp" class="form-text">Опишите ферму, что из урожая есть, овощи, фрукты и
+                        т.п.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Опубликовать</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

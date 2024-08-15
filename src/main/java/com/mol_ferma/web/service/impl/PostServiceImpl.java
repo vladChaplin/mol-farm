@@ -28,6 +28,11 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Post savePost(Post post) {
+        return postRepository.save(post);
+    }
+
     private PostDto mapToPost(Post post) {
         PostDto postDto = PostDto.builder()
                 .id(post.getId())

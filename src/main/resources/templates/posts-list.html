@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <title>Фермы - Алматинская область</title>
+</head>
+
+<body>
+    <div class="container-fluid" layout:fragment="body">
+    <!--  Row 1 -->
+    <div class="row">
+        <div class="p-2 mb-4 rounded bg-dark">
+            <h3 class="fw-semibold text-white text-center">Алматинская область</h3>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title fw-semibold mb-4">Фермы на которых имеется урожай</h3>
+                <div th:each="post :${posts}" class="row">
+                    <div class="card p-0 mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img
+                                        th:src="${post.getPhotoUrl()}"
+                                        class="img-fluid rounded h-100"
+                                        alt="Изображение фермы">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Ферма <span th:text="${post.getTitle()}"></span></h5>
+                                    <p class="card-text">Адрес: <span th:text="${post.getAddress()}"></span></p>
+                                    <p class="card-text">Инфо: <span th:text="${post.getContent()}"></span></p>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                        <a href="#" class="btn btn-success">Подробнее</a>
+                                        <a href="#" class="btn btn-info">Обновить</a>
+                                        <a href="#" class="btn btn-danger">Удалить</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
