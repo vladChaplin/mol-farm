@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## Google Cloud Storage ##
+src/main/java/com/mol_ferma/web/security/google-credentials.json
+**/google-credentials.json
