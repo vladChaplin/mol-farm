@@ -4,6 +4,7 @@ import com.mol_ferma.web.dto.PostDto;
 import com.mol_ferma.web.models.Post;
 import com.mol_ferma.web.service.GcsStorageService;
 import com.mol_ferma.web.service.PostService;
+import com.mol_ferma.web.utils.FileUploadUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,26 +53,13 @@ public class PostController {
     public String saveNewPost(@Valid @ModelAttribute("post") PostDto postDto,
                               BindingResult result,
                               Model model) {
-//        if(postDto.getPhotoUrl().isEmpty()) {
-//            result.addError(new FieldError("postDto", "photoUrl", "Необходимо выбрать изображение фермы!"));
-//        }
         if(result.hasErrors()) {
             model.addAttribute("post", postDto);
             return "posts-create";
         }
 
         MultipartFile image = postDto.getPhotoFile();
-        StringBuilder strBuilder = new StringBuilder(LocalDateTime.now().getSecond());
-        var newFileName = strBuilder.append("_").append(image.getOriginalFilename()).toString();
-        String fileUrl = "";
-
-        try {
-            File tempFile = File.createTempFile("upload-", newFileName);
-            image.transferTo(tempFile);
-            fileUrl = gcsStorageService.uploadFile(tempFile, newFileName);
-        } catch (IOException e) {
-            throw new RuntimeException("Error upload file Google Cloud Storage!" + e);
-        }
+        String fileUrl = FileUploadUtil.uploadFileToGCS(image, gcsStorageService);
 
         postDto.setPhotoUrl(fileUrl);
         postService.savePost(postDto);
@@ -90,12 +78,26 @@ public class PostController {
     public String updatePost(@PathVariable("postId") Long postId,
                              @Valid
                              @ModelAttribute("post") PostDto postDto,
-                             BindingResult result) {
+                             BindingResult result,
+                             Model model) {
         if(result.hasErrors()) {
+            model.addAttribute("post", postDto);
             return "posts-edit";
         }
 
+        if(!postDto.isNullPhotoFile()) {
 
+            MultipartFile image = postDto.getPhotoFile();
+
+            if(!postDto.isNullPhotoUrl()) {
+                boolean resDelete = gcsStorageService.deleteFile(postDto.getPhotoUrl());
+                if(resDelete) System.out.println("ФАЙЛ УСПЕШНО УДАЛЁН " + postDto.getPhotoUrl());
+            }
+
+            String fileUrl = FileUploadUtil.uploadFileToGCS(image, gcsStorageService);
+
+            postDto.setPhotoUrl(fileUrl);
+        }
 
         postDto.setId(postId);
         postService.updatePost(postDto);

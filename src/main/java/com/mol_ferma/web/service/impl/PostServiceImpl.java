@@ -51,6 +51,7 @@ public class PostServiceImpl implements PostService {
                 .title(postDto.getTitle())
                 .photoUrl(postDto.getPhotoUrl())
                 .content(postDto.getContent())
+                .createdOn(postDto.getCreatedOn())
                 .address(postDto.getAddress())
                 .build();
     }

@@ -1,9 +1,6 @@
 package com.mol_ferma.web.service.impl;
 
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.*;
 import com.mol_ferma.web.service.GcsStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +36,21 @@ public class GcsStorageServiceImpl implements GcsStorageService {
     }
 
     @Override
-    public boolean deleteFile(String fileName) {
-        return false;
+    public boolean deleteFile(String fileUrlGCS) {
+        boolean deleted;
+        try {
+            BlobId blobId = BlobId.of(bucketName, extractFileName(fileUrlGCS));
+            deleted = storage.delete(blobId);
+            if(!deleted) throw new RuntimeException("Failed to delete file from GCS or file not found");
+
+        } catch (StorageException e) {
+            throw new RuntimeException("Failed to delete file from GCS", e);
+        }
+
+        return deleted;
+    }
+
+    private String extractFileName(String fileUrlGCS) {
+        return fileUrlGCS.split("/")[4];
     }
 }

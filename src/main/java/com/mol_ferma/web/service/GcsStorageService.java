@@ -7,5 +7,5 @@ import java.io.File;
 @Service
 public interface GcsStorageService {
     String uploadFile(File file, String fileName);
-    boolean deleteFile(String fileName);
+    boolean deleteFile(String fileUrlGCS);
 }

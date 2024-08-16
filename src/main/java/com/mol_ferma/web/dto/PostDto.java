@@ -27,4 +27,11 @@ public class PostDto {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 
+    public boolean isNullPhotoFile() {
+        return photoFile == null || photoFile.isEmpty();
+    }
+
+    public boolean isNullPhotoUrl() {
+        return photoUrl == null || photoUrl.isEmpty();
+    }
 }
