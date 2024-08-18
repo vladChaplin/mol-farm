@@ -42,6 +42,13 @@ public class PostController {
         return "posts-list";
     }
 
+    @GetMapping("/posts/{postId}")
+    public String postDetail(@PathVariable("postId") Long postId, Model model) {
+        PostDto postDto = postService.findPostById(postId);
+        model.addAttribute("post", postDto);
+        return "posts-detail";
+    }
+
     @GetMapping("/posts/new")
     public String createPostForm(Model model) {
         PostDto post = new PostDto();
@@ -90,8 +97,7 @@ public class PostController {
             MultipartFile image = postDto.getPhotoFile();
 
             if(!postDto.isNullPhotoUrl()) {
-                boolean resDelete = gcsStorageService.deleteFile(postDto.getPhotoUrl());
-                if(resDelete) System.out.println("ФАЙЛ УСПЕШНО УДАЛЁН " + postDto.getPhotoUrl());
+                gcsStorageService.deleteFile(postDto.getPhotoUrl());
             }
 
             String fileUrl = FileUploadUtil.uploadFileToGCS(image, gcsStorageService);
@@ -101,6 +107,17 @@ public class PostController {
 
         postDto.setId(postId);
         postService.updatePost(postDto);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/{postId}/delete")
+    public String deletePost(@PathVariable("postId") Long postId, Model model) {
+        PostDto postDto = postService.findPostById(postId);
+        boolean flag = gcsStorageService.deleteFile(postDto.getPhotoUrl());
+
+        if(flag) System.out.println("ФАЙЛ УСПЕШНО УДАЛЁН НА GOOGLE CLOUD STORAGE");
+
+        postService.delete(postId);
         return "redirect:/posts";
     }
 }

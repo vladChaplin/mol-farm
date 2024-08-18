@@ -33,9 +33,11 @@
                                     <p class="card-text">Адрес: <span th:text="${post.getAddress()}"></span></p>
                                     <p class="card-text">Инфо: <span th:text="${post.getContent()}"></span></p>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                        <a href="#" class="btn btn-success">Подробнее</a>
+                                        <a th:href="@{/posts/{postId}(postId=${post.id})}" class="btn btn-success">Подробнее</a>
                                         <a th:href="@{/posts/{postId}/edit(postId=${post.id})}" class="btn btn-info">Изменить</a>
-                                        <a href="#" class="btn btn-danger">Удалить</a>
+                                        <a th:href="@{/posts/{postId}/delete(postId=${post.id})}" class="btn btn-danger"
+                                            onclick="return confirm('Вы уверены, что хотите удалить эту запись о ферме?')"
+                                        >Удалить</a>
                                     </div>
                                 </div>
                             </div>

@@ -45,6 +45,11 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
     }
 
+    @Override
+    public void delete(Long postId) {
+        postRepository.deleteById(postId);
+    }
+
     private Post mapToPost(PostDto postDto) {
         return Post.builder()
                 .id(postDto.getId())

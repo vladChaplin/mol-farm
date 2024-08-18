@@ -14,7 +14,7 @@
     <h5 class="card-title fw-semibold mb-4">Для добавления фермы заполните данные</h5>
     <div class="card">
         <div class="card-body">
-            <form role="form" enctype="multipart/form-data" method="post" th:action="@{/posts/new}" th:object="${post}">
+            <form id="formUpdatePost" role="form" enctype="multipart/form-data" method="post" th:action="@{/posts/new}" th:object="${post}">
                 <div class="mb-3">
                     <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger" role="alert"></div>
                     <label for="title" class="form-label">Название фермы</label>
@@ -31,15 +31,29 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="photoFile" class="form-label">Выберите фотографию фермы</label>
-                    <input
-                            class="form-control"
-                            type="file"
-                            id="photoFile"
-                            name="photoFile"
-                            th:field="*{photoFile}"
-                            accept="image/*"
-                            required>
+                    <div class="card p-0 mb-3">
+                        <div class="row g-0">
+                            <div class="d-none col-md-4 position-relative" id="imageContainer">
+                                <img id="frame" src="" class="img-fluid rounded h-100" alt="Текущее изображение фермы">
+                                <button type="button" class="btn-close bg-danger position-absolute top-0 end-0" onclick="clearImage()" aria-label="Close"></button>
+                            </div>
+                            <div class="col-md-8 card-body d-flex flex-column align-items-start justify-content-center">
+                                <label for="photoFile" class="form-label">Выберите фотографию фермы</label>
+<!--                                TODO: Проблема при повторном выборе файла, фото preview не отображается-->
+                                <input
+                                        th:field="*{photoFile}"
+                                        class="form-control"
+                                        type="file"
+                                        id="photoFile"
+                                        name="photoFile"
+                                        accept="image/*"
+                                        onchange="inputImageOnForm()"
+                                        placeholder="Выбрать фото"
+                                        required
+                                >
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="alert alert-danger" role="alert"></div>
@@ -72,10 +86,14 @@
                         т.п.
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Опубликовать</button>
+                <button id="submitBtn" type="submit" class="btn btn-primary">
+                    <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span id="buttonText">Опубликовать</span>
+                </button>
             </form>
         </div>
     </div>
+        <script src="/assets/js/form-edit-create-post.js"></script>
 </div>
 </body>
 
