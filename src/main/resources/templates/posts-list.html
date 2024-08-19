@@ -10,11 +10,23 @@
 
 <body>
     <div class="container-fluid" layout:fragment="body">
-    <!--  Row 1 -->
+
     <div class="row">
         <div class="p-2 mb-4 rounded bg-dark">
             <h3 class="fw-semibold text-white text-center">Алматинская область</h3>
         </div>
+        <div class="p-0">
+            <form th:action="@{/posts/search}" class="form-inline">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-info p-0" type="submit" style="min-width: 42px">
+                        <i class="ti ti-search"></i>
+                    </button>
+                    <input name="title" type="search" class="form-control" placeholder="Начните поиск ферм по названию" aria-label="Search" aria-describedby="basic-addon1">
+                </div>
+            </form>
+        </div>
+
+
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title fw-semibold mb-4">Фермы на которых имеется урожай</h3>

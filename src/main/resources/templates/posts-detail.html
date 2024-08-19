@@ -15,7 +15,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card mb-4 max-width-block">
             <h2 class="card-title p-2 text-center bg-dark rounded-top text-white" th:text="'Ферма ' + ${post.title}"> </h2>
-            <img th:src="${post.photoUrl}" class="rounded mx-auto d-block img-fluid max-height-img" alt="Фотография фермы">
+            <img th:src="${post.photoUrl}" class="rounded-top mx-auto d-block img-fluid max-height-img" alt="Фотография фермы">
             <div class="card-body">
                 <div class="small text-muted mb-2" th:text="'Обновлён ' + ${post.createdOn}"></div>
                 <h3 class="p-0">Расположение</h3>

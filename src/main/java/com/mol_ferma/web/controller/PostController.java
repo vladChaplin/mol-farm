@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -38,6 +35,13 @@ public class PostController {
     @GetMapping("/posts")
     public String listPosts(Model model) {
         List<PostDto> posts = postService.findAllPosts();
+        model.addAttribute("posts", posts);
+        return "posts-list";
+    }
+
+    @GetMapping("/posts/search")
+    public String searchPost(@RequestParam(value = "title") String title, Model model) {
+        List<PostDto> posts = postService.searchPosts(title);
         model.addAttribute("posts", posts);
         return "posts-list";
     }

@@ -50,6 +50,12 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(postId);
     }
 
+    @Override
+    public List<PostDto> searchPosts(String title) {
+        List<Post> posts = postRepository.searchPosts(title);
+        return posts.stream().map(this::mapToPostDto).collect(Collectors.toList());
+    }
+
     private Post mapToPost(PostDto postDto) {
         return Post.builder()
                 .id(postDto.getId())
