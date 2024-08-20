@@ -55,6 +55,14 @@
                                 <span class="hide-menu">Регистрация</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" th:href="@{/regions}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-map-2"></i>
+                </span>
+                                <span class="hide-menu">Регионы</span>
+                            </a>
+                        </li>
 
 
                     </ul>
@@ -79,9 +87,9 @@
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                            <a
-                                    th:href="@{posts/new}"
-                                    class="btn btn-primary">Добавить ферму</a>
+                            <a th:href="${currentURI == '/posts/create'} ? ${currentURI} : @{/posts/new}"
+                               class="btn btn-primary">Добавить ферму</a>
+
                             <li class="nav-item">
                                 <a class="nav-link nav-icon-hover" href="./authentication-login.html">
                                     <i class="ti ti-logout"></i>

@@ -1,5 +1,6 @@
 package com.mol_ferma.web.dto;
 
+import com.mol_ferma.web.models.Region;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,6 +27,7 @@ public class PostDto {
     private String address;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
+    private Region region;
 
     public boolean isNullPhotoFile() {
         return photoFile == null || photoFile.isEmpty();

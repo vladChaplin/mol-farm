@@ -12,9 +12,7 @@
     <div class="container-fluid" layout:fragment="body">
 
     <div class="row">
-        <div class="p-2 mb-4 rounded bg-dark">
-            <h3 class="fw-semibold text-white text-center">Алматинская область</h3>
-        </div>
+
         <div class="p-0">
             <form th:action="@{/posts/search}" class="form-inline">
                 <div class="input-group mb-3">
@@ -26,6 +24,9 @@
             </form>
         </div>
 
+        <div class="p-2 mb-4 rounded bg-dark">
+            <h3 th:text="${regions.name}" class="fw-semibold text-white text-center"></h3>
+        </div>
 
         <div class="card">
             <div class="card-body">

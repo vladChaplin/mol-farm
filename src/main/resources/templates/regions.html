@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <title>Регионы</title>
+</head>
+
+<body>
+<div layout:fragment="body" class="container-fluid">
+
+    <h5 class="card-title fw-semibold mb-4">Регионы</h5>
+    <div class="mb-3">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Название</th>
+                <th scope="col">Широта</th>
+                <th scope="col">Долгота</th>
+            </tr>
+            </thead>
+            <tbody th:each="region_row :${regions_list}">
+            <tr>
+                <th  scope="row" th:text="${region_row.id}"></th>
+                <td th:text="${region_row.name}"></td>
+                <td th:text="${region_row.latitude}"></td>
+                <td th:text="${region_row.longitude}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <form id="formUpdatePost" role="form" method="post" th:action="@{/regions/create}" th:object="${region}">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Название региона</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            th:field="*{name}"
+                            aria-describedby="nameHelp"
+                            required
+                    >
+                    <div id="nameHelp" class="form-text">Введите название нового региона
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="latitude" class="form-label">Широта</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="latitude"
+                            name="latitude"
+                            th:field="*{latitude}"
+                            aria-describedby="latitudeHelp"
+                            required
+                    >
+                    <div id="latitudeHelp" class="form-text">Введите широту в формате 43.222014
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="longitude" class="form-label">Долгота</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="longitude"
+                            name="longitude"
+                            th:field="*{longitude}"
+                            aria-describedby="longitudeHelp"
+                            required
+                    >
+                    <div id="longitudeHelp" class="form-text">Введите долготу в формате 76.8512485
+                    </div>
+                </div>
+                <button id="submitBtn" type="submit" class="btn btn-primary">
+                    <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span id="buttonText">Добавить</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="/assets/js/form-edit-create-post.js"></script>
+</div>
+</body>
+
+</html>

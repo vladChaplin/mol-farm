@@ -1,22 +1,20 @@
 package com.mol_ferma.web.controller;
 
 import com.mol_ferma.web.dto.PostDto;
-import com.mol_ferma.web.models.Post;
+import com.mol_ferma.web.dto.RegionDto;
 import com.mol_ferma.web.service.GcsStorageService;
 import com.mol_ferma.web.service.PostService;
+import com.mol_ferma.web.service.RegionService;
 import com.mol_ferma.web.utils.FileUploadUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -24,18 +22,29 @@ public class PostController {
 
     private final PostService postService;
 
+    private final RegionService regionService;
+
     private final GcsStorageService gcsStorageService;
 
     @Autowired
-    public PostController(PostService postService, GcsStorageService gcsStorageService) {
+    public PostController(PostService postService,
+                          RegionService regionService,
+                          GcsStorageService gcsStorageService) {
         this.postService = postService;
+        this.regionService = regionService;
         this.gcsStorageService = gcsStorageService;
     }
 
     @GetMapping("/posts")
-    public String listPosts(Model model) {
-        List<PostDto> posts = postService.findAllPosts();
+    public String listPosts(HttpServletRequest request,
+            Model model) {
+        List<PostDto> posts = postService.findAllPosts().stream().filter(postDto -> postDto.get);
+        RegionDto regionDto = regionService.findByRegionId(1L);
+
         model.addAttribute("posts", posts);
+        model.addAttribute("currentURI", request.getRequestURI());
+        model.addAttribute("regionId", 1L);
+        model.addAttribute("regions", regionDto);
         return "posts-list";
     }
 
