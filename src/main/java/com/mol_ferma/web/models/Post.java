@@ -32,4 +32,8 @@ public class Post {
 
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
 }
