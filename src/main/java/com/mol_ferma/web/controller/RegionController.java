@@ -29,7 +29,7 @@ public class RegionController {
 
         List<RegionDto> regions = regionService.findAllRegions();
         model.addAttribute("regions_list", regions);
-
+        
         return "regions";
     }
 

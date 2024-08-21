@@ -69,6 +69,16 @@
                     <div id="addressHelp" class="form-text">Введите полный адрес, где находится ферма</div>
                 </div>
                 <div class="mb-3">
+                    <label for="select_region" class="form-label">Выберите регион</label>
+                    <select id="select_region" class="form-select" th:field="*{region}">
+                        <option th:each="region : ${regions}"
+                                th:value="${region.id}"
+                                th:text="${region.name}">
+                        </option>
+                    </select>
+
+                </div>
+                <div class="mb-3">
                     <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="alert alert-danger" role="alert"></div>
                     <label for="content" class="form-label">Подробная информация</label>
                     <textarea

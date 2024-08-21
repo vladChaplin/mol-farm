@@ -64,6 +64,7 @@ public class PostServiceImpl implements PostService {
                 .content(postDto.getContent())
                 .createdOn(postDto.getCreatedOn())
                 .address(postDto.getAddress())
+                .region(postDto.getRegion())
                 .build();
     }
 
@@ -77,6 +78,7 @@ public class PostServiceImpl implements PostService {
                 .photoUrl(post.getPhotoUrl())
                 .createdOn(post.getCreatedOn())
                 .updatedOn(post.getUpdatedOn())
+                .region(post.getRegion())
                 .build();
         return postDto;
     }

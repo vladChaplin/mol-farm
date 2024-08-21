@@ -2,10 +2,12 @@ package com.mol_ferma.web.controller;
 
 import com.mol_ferma.web.dto.PostDto;
 import com.mol_ferma.web.dto.RegionDto;
+import com.mol_ferma.web.models.Region;
 import com.mol_ferma.web.service.GcsStorageService;
 import com.mol_ferma.web.service.PostService;
 import com.mol_ferma.web.service.RegionService;
 import com.mol_ferma.web.utils.FileUploadUtil;
+import com.mol_ferma.web.utils.mapper.RegionMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -38,13 +41,11 @@ public class PostController {
     @GetMapping("/posts")
     public String listPosts(HttpServletRequest request,
             Model model) {
-        List<PostDto> posts = postService.findAllPosts().stream().filter(postDto -> postDto.get);
-        RegionDto regionDto = regionService.findByRegionId(1L);
+        List<PostDto> posts = postService.findAllPosts();
 
         model.addAttribute("posts", posts);
         model.addAttribute("currentURI", request.getRequestURI());
-        model.addAttribute("regionId", 1L);
-        model.addAttribute("regions", regionDto);
+
         return "posts-list";
     }
 
@@ -57,15 +58,27 @@ public class PostController {
 
     @GetMapping("/posts/{postId}")
     public String postDetail(@PathVariable("postId") Long postId, Model model) {
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
         PostDto postDto = postService.findPostById(postId);
+        Region region = postDto.getRegion();
+        String formattedDate = postDto.getUpdatedOn().format(formatterDate);
+
         model.addAttribute("post", postDto);
+        model.addAttribute("region", region);
+        model.addAttribute("formattedDate", formattedDate);
+
         return "posts-detail";
     }
 
     @GetMapping("/posts/new")
     public String createPostForm(Model model) {
         PostDto post = new PostDto();
+        List<RegionDto> regions = regionService.findAllRegions();
+
         model.addAttribute("post", post);
+        model.addAttribute("regions", regions);
+
         return "posts-create";
     }
 
@@ -90,7 +103,10 @@ public class PostController {
     @GetMapping("/posts/{postId}/edit")
     public String editPostForm(@PathVariable("postId") Long postId, Model model) {
         PostDto post = postService.findPostById(postId);
+        List<RegionDto> regions = regionService.findAllRegions();
+
         model.addAttribute("post", post);
+        model.addAttribute("regions", regions);
         return "posts-edit";
     }
 
