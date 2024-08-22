@@ -20,6 +20,7 @@
                 <th scope="col">Название</th>
                 <th scope="col">Широта</th>
                 <th scope="col">Долгота</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody th:each="region_row :${regions_list}">
@@ -28,13 +29,23 @@
                 <td th:text="${region_row.name}"></td>
                 <td th:text="${region_row.latitude}"></td>
                 <td th:text="${region_row.longitude}"></td>
+                <td class="d-md-flex gap-3 justify-content-md-center">
+                    <a th:href="@{/regions/{regionId}/edit(regionId=${region_row.id})}" class="btn btn-info">Изменить</a>
+                    <a th:href="@{/regions/{regionId}/delete(regionId=${region_row.id})}" class="btn btn-danger"
+                       onclick="return confirm('Вы уверены, что хотите удалить этот регион?')"
+                    >Удалить</a>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="card">
+        <div th:if="${currentURI.contains('/edit')}" class="alert alert-warning mb-3" role="alert">
+            Измените данные о регионе
+        </div>
         <div class="card-body">
-            <form id="formUpdatePost" role="form" method="post" th:action="@{/regions/create}" th:object="${region}">
+            <form id="formUpdatePost" role="form" method="post" th:action="${currentURI.contains('/edit')} ? @{/regions/{regionId}/edit(regionId = ${region.id})} : @{/regions/create}" th:object="${region}">
+                <input type="hidden" th:field="*{id}">
                 <div class="mb-3">
                     <label for="name" class="form-label">Название региона</label>
                     <input
@@ -77,9 +88,9 @@
                     <div id="longitudeHelp" class="form-text">Введите долготу в формате 76.8512485
                     </div>
                 </div>
-                <button id="submitBtn" type="submit" class="btn btn-primary">
+                <button id="submitBtn" type="submit" th:class="${currentURI.contains('/edit') ? 'btn btn-primary' : 'btn btn-success'}">
                     <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    <span id="buttonText">Добавить</span>
+                    <span id="buttonText" th:text="${currentURI.contains('/edit')} ? 'Обновить' : 'Добавить'"></span>
                 </button>
             </form>
         </div>

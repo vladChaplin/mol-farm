@@ -43,11 +43,11 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public void updateRegion(RegionDto regionDto) {
-
+        regionRepository.save(RegionMapper.mapToRegion(regionDto));
     }
 
     @Override
     public void deleteRegion(Long regionId) {
-
+        regionRepository.deleteById(regionId);
     }
 }
