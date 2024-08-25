@@ -1,5 +1,6 @@
 package com.mol_ferma.web.dto;
 
+import com.mol_ferma.web.enums.RoleName;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
@@ -17,4 +18,5 @@ public class RegistrationDto {
     private String lastName;
     @NotEmpty
     private String phoneNumber;
+    private RoleName role;
 }

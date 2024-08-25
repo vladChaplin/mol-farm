@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/png" href="/assets/images/logos/favicon.png" />
+  <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
+  <title>Вход</title>
+</head>
+
+
+<body>
+<!--  Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+  <div
+          class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center w-100">
+      <div class="row justify-content-center w-100">
+        <div class="col-md-8 col-lg-6 col-xxl-3">
+          <div class="card mb-0">
+            <div class="card-body">
+              <a th:href="@{/posts}" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                <img src="/assets/images/logos/logo-almaty.png" width="180" alt="logo almaty" />
+              </a>
+              <p class="text-center">Вход в аккаунт</p>
+              <div th:if="${param.fail}" class="alert alert-danger" role="alert">
+                Пользователь с таким e-mail не существует! <a th:href="@{/register}" class="text-primary fw-bold ms-2">Создайте аккаунт</a>
+              </div>
+              <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                Вы успешно вышли из аккаунта
+              </div>
+              <form role="form" method="post" th:action="@{/login}">
+                <div class="mb-3">
+                  <label for="username" class="form-label">E-mail адрес</label>
+                  <input
+                          id="username"
+                          name="username"
+                          type="text"
+                          class="form-control"
+                          aria-describedby="emailHelp"
+                  >
+                </div>
+                <div class="mb-4">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                          id="password"
+                          name="password"
+                          type="password"
+                          class="form-control"
+                  >
+                </div>
+                <!--<div class="d-flex align-items-center justify-content-between mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label text-dark" for="flexCheckChecked">
+                      Не выходить из системы
+                    </label>
+                  </div>
+                  <a class="text-primary fw-bold" href="./index.html">Забыли пароль ?</a>
+                </div>-->
+                <button
+                        value="Log in"
+                        type="submit"
+                        id="submitBtn"
+                        class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
+                  <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span id="buttonText">Войти</span>
+                </button>
+                <div class="d-flex align-items-center justify-content-center">
+                  <p class="fs-4 mb-0 fw-bold">Первый раз на сайте?</p>
+                  <a th:href="@{/register}" class="text-primary fw-bold ms-2">Создайте аккаунт</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<!--<script src="/assets/js/form-edit-create-post.js"></script>-->
+
+
+<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/sidebarmenu.js"></script>
+<script src="/assets/js/app.min.js"></script>
+<script src="/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="/assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+</html>

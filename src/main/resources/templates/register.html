@@ -32,23 +32,52 @@
                             <form role="form" method="post" th:action="@{/register/save}" th:object="${user}">
                                 <div class="mb-3">
                                     <label for="firstName" class="form-label">Имя</label>
-                                    <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="firstName"
+                                            aria-describedby="firstNameHelp"
+                                            th:field="*{firstName}"
+                                    >
                                 </div>
                                 <div class="mb-3">
                                     <label for="lastName" class="form-label">Фамилия</label>
-                                    <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="lastName"
+                                            aria-describedby="lastNameHelp"
+                                            th:field="*{lastName}"
+                                    >
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">E-mail адрес</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                    <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            aria-describedby="emailHelp"
+                                            th:field="*{email}"
+                                    >
                                 </div>
                                 <div class="mb-3">
                                     <label for="phoneNumber" class="form-label">Мобильный телефон</label>
-                                    <input type="tel" class="form-control" id="phoneNumber" aria-describedby="phoneNumberHelp">
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            id="phoneNumber"
+                                            aria-describedby="phoneNumberHelp"
+                                            th:field="*{phoneNumber}"
+                                    >
                                 </div>
                                 <div class="mb-4">
                                     <label for="password" class="form-label">Пароль</label>
-                                    <input type="password" class="form-control" id="password">
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="password"
+                                            th:field="*{password}"
+                                    >
                                 </div>
                                 <button th:href="@{/register}" type="submit" id="submitBtn" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
                                     <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -56,7 +85,7 @@
                                 </button>
                                 <div class="d-flex align-items-center justify-content-center">
                                     <p class="fs-4 mb-0 fw-bold">Уже есть аккаунт?</p>
-                                    <a class="text-primary fw-bold ms-2" href="./authentication-login.html">Войти</a>
+                                    <a class="text-primary fw-bold ms-2" th:href="@{/login}">Войти</a>
                                 </div>
                             </form>
                         </div>

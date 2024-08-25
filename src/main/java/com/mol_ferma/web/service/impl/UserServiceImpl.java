@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -22,24 +23,27 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public void saveUser(RegistrationDto registrationDto) {
         UserEntity user = new UserEntity();
-        String userName = Stream.of(registrationDto.getEmail().substring(0, 6))
-                .map(StringBuilder::new)
-                .map(str -> str.append(registrationDto.getLastName()))
-                .map(str -> str.append(new Random().nextInt())).toString();
 
-        user.setUsername(userName);
         user.setEmail(registrationDto.getEmail());
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setPassword(registrationDto.getPassword());
         user.setPhoneNumber(registrationDto.getPhoneNumber());
 
-        Role role = roleRepository.findByName(RoleName.ADMIN).get();
+        String userName = Stream.of(user.getEmail().substring(0, user.getEmail().indexOf("@")))
+                .map(StringBuilder::new)
+                .map(name -> name.append(user.getLastName()).append(new Random().nextInt())).collect(Collectors.joining());
+        user.setUsername(userName);
+
+
+
+        Role role = roleRepository.findByName(registrationDto.getRole()).get();
         user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);

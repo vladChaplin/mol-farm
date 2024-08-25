@@ -1,6 +1,7 @@
 package com.mol_ferma.web.controller;
 
 import com.mol_ferma.web.dto.RegistrationDto;
+import com.mol_ferma.web.enums.RoleName;
 import com.mol_ferma.web.models.UserEntity;
 import com.mol_ferma.web.service.UserService;
 import jakarta.validation.Valid;
@@ -19,6 +20,11 @@ public class AuthController {
     @Autowired
     public AuthController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
     }
 
     @GetMapping("/register")
@@ -46,8 +52,10 @@ public class AuthController {
             model.addAttribute("user", user);
             return "register";
         }
-
+        System.out.println(user);
+        user.setRole(RoleName.USER);
         userService.saveUser(user);
+
         return "redirect:/posts?success";
     }
 }
