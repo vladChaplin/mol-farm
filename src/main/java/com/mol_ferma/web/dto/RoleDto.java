@@ -1,5 +1,6 @@
 package com.mol_ferma.web.dto;
 
+import com.mol_ferma.web.enums.RoleName;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,5 +8,5 @@ import lombok.Data;
 @Builder
 public class RoleDto {
     private int id;
-    private String name;
+    private RoleName name;
 }

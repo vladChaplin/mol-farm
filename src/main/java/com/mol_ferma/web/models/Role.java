@@ -1,6 +1,7 @@
 package com.mol_ferma.web.models;
 
 
+import com.mol_ferma.web.enums.RoleName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,9 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private RoleName name;
     @ManyToMany(mappedBy = "roles")
     private List<UserEntity> users = new ArrayList<>();
 }
