@@ -8,6 +8,7 @@ import com.mol_ferma.web.repository.RoleRepository;
 import com.mol_ferma.web.repository.UserRepository;
 import com.mol_ferma.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -15,15 +16,19 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.mol_ferma.web.utils.UserFormatName.formatUsernameByEmail;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,15 +38,10 @@ public class UserServiceImpl implements UserService {
         user.setEmail(registrationDto.getEmail());
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
-        user.setPassword(registrationDto.getPassword());
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         user.setPhoneNumber(registrationDto.getPhoneNumber());
 
-        String userName = Stream.of(user.getEmail().substring(0, user.getEmail().indexOf("@")))
-                .map(StringBuilder::new)
-                .map(name -> name.append(user.getLastName()).append(new Random().nextInt())).collect(Collectors.joining());
-        user.setUsername(userName);
-
-
+        user.setUsername(formatUsernameByEmail(user));
 
         Role role = roleRepository.findByName(registrationDto.getRole()).get();
         user.setRoles(Arrays.asList(role));

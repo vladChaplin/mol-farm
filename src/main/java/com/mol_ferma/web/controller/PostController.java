@@ -3,11 +3,11 @@ package com.mol_ferma.web.controller;
 import com.mol_ferma.web.dto.PostDto;
 import com.mol_ferma.web.dto.RegionDto;
 import com.mol_ferma.web.models.Region;
+import com.mol_ferma.web.repository.UserRepository;
 import com.mol_ferma.web.service.GcsStorageService;
 import com.mol_ferma.web.service.PostService;
 import com.mol_ferma.web.service.RegionService;
 import com.mol_ferma.web.utils.FileUploadUtil;
-import com.mol_ferma.web.utils.mapper.RegionMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,18 @@ public class PostController {
 
     private final RegionService regionService;
 
+    private final UserRepository userRepository;
+
     private final GcsStorageService gcsStorageService;
 
     @Autowired
     public PostController(PostService postService,
                           RegionService regionService,
+                          UserRepository userRepository,
                           GcsStorageService gcsStorageService) {
         this.postService = postService;
         this.regionService = regionService;
+        this.userRepository = userRepository;
         this.gcsStorageService = gcsStorageService;
     }
 

@@ -52,7 +52,7 @@ public class AuthController {
             model.addAttribute("user", user);
             return "register";
         }
-        System.out.println(user);
+
         user.setRole(RoleName.USER);
         userService.saveUser(user);
 

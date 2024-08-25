@@ -34,11 +34,12 @@
               </div>
               <form role="form" method="post" th:action="@{/login}">
                 <div class="mb-3">
-                  <label for="username" class="form-label">E-mail адрес</label>
+                  <label for="email" class="form-label">E-mail адрес</label>
+<!--                  Spring Security берёт почту, как username, но внутри метода loadUserByUsername поиск производит по Email-->
                   <input
-                          id="username"
+                          id="email"
                           name="username"
-                          type="text"
+                          type="email"
                           class="form-control"
                           aria-describedby="emailHelp"
                   >
