@@ -18,6 +18,7 @@
             <img th:src="${post.photoUrl}" class="mx-auto d-block img-fluid max-height-img" alt="Фотография фермы">
             <div class="card-body">
                 <div class="small text-muted mb-2" th:text="'Обновлён ' + ${formattedDate}"></div>
+                <div class="small text-muted mb-2" th:text="'Пользователем ' + ${post.createdBy.firstName} + ' ' + ${post.createdBy.lastName}"></div>
                 <h3 class="p-0">Регион</h3>
                 <p class="card-text" th:text="${region.getName()}"></p>
                 <h3 class="p-0">Расположение</h3>

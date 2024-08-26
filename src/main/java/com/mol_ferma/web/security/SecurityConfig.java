@@ -32,7 +32,7 @@ public class SecurityConfig {
 //        TODO: Нужно обязательно настроить csrf так как есть post методы на сайты, защита от подделки межсайтового запроса
         http.csrf(csrf -> csrf.configure(http))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/register/save", "/posts", "/assets/**")
+                        .requestMatchers("/login", "/register", "/register/save", "/posts", "/posts/{postId}", "/assets/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
@@ -44,10 +44,15 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .permitAll());
+                /*.logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
-                );
+                );*/
         return http.build();
     }
 

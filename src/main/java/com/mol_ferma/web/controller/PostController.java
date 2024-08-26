@@ -3,10 +3,13 @@ package com.mol_ferma.web.controller;
 import com.mol_ferma.web.dto.PostDto;
 import com.mol_ferma.web.dto.RegionDto;
 import com.mol_ferma.web.models.Region;
+import com.mol_ferma.web.models.UserEntity;
 import com.mol_ferma.web.repository.UserRepository;
+import com.mol_ferma.web.security.SecurityUtil;
 import com.mol_ferma.web.service.GcsStorageService;
 import com.mol_ferma.web.service.PostService;
 import com.mol_ferma.web.service.RegionService;
+import com.mol_ferma.web.service.UserService;
 import com.mol_ferma.web.utils.FileUploadUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -27,25 +30,31 @@ public class PostController {
 
     private final RegionService regionService;
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     private final GcsStorageService gcsStorageService;
 
     @Autowired
     public PostController(PostService postService,
                           RegionService regionService,
-                          UserRepository userRepository,
+                          UserService userService,
                           GcsStorageService gcsStorageService) {
         this.postService = postService;
         this.regionService = regionService;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.gcsStorageService = gcsStorageService;
     }
 
     @GetMapping("/posts")
-    public String listPosts(HttpServletRequest request,
-            Model model) {
+    public String listPosts(HttpServletRequest request, Model model) {
+
+        UserEntity user = new UserEntity();
         List<PostDto> posts = postService.findAllPosts();
+        String emailUser = SecurityUtil.getSessionUser();
+        if(emailUser != null) {
+            user = userService.findByEmail(emailUser);
+        }
+        model.addAttribute("user", user);
 
         model.addAttribute("posts", posts);
         model.addAttribute("currentURI", request.getRequestURI());

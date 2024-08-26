@@ -51,10 +51,12 @@
                                     <p class="card-text">Инфо: <span th:text="${post.getContent()}"></span></p>
                                     <div class="d-md-flex gap-3 justify-content-md-start">
                                         <a th:href="@{/posts/{postId}(postId=${post.id})}" class="btn btn-success">Подробнее</a>
-                                        <a th:href="@{/posts/{postId}/edit(postId=${post.id})}" class="btn btn-info">Изменить</a>
-                                        <a th:href="@{/posts/{postId}/delete(postId=${post.id})}" class="btn btn-danger"
-                                            onclick="return confirm('Вы уверены, что хотите удалить эту запись о ферме?')"
-                                        >Удалить</a>
+                                        <div th:if="${user.id} == ${post.createdBy.id}" class="d-md-flex gap-3 justify-content-md-start">
+                                            <a th:href="@{/posts/{postId}/edit(postId=${post.id})}" class="btn btn-info">Изменить</a>
+                                            <a th:href="@{/posts/{postId}/delete(postId=${post.id})}" class="btn btn-danger"
+                                               onclick="return confirm('Вы уверены, что хотите удалить эту запись о ферме?')"
+                                            >Удалить</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
