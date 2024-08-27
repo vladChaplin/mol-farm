@@ -2,7 +2,7 @@
 <html lang="ru"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head th:fragment="header">
     <meta charset="UTF-8">
@@ -56,15 +56,14 @@
                             <span class="hide-menu">Регистрация</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
+                    <li sec:authorize="hasRole('ADMIN')" class="sidebar-item">
                         <a class="sidebar-link" th:href="@{/regions}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-map-2"></i>
-                </span>
+                        <span>
+                          <i class="ti ti-map-2"></i>
+                        </span>
                             <span class="hide-menu">Регионы</span>
                         </a>
                     </li>
-
 
                 </ul>
             </nav>

@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <title>Фермы - Алматинская область</title>
@@ -51,7 +52,8 @@
                                     <p class="card-text">Инфо: <span th:text="${post.getContent()}"></span></p>
                                     <div class="d-md-flex gap-3 justify-content-md-start">
                                         <a th:href="@{/posts/{postId}(postId=${post.id})}" class="btn btn-success">Подробнее</a>
-                                        <div th:if="${user.id} == ${post.createdBy.id}" class="d-md-flex gap-3 justify-content-md-start">
+                                        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${user?.id == post?.createdBy?.id}"
+                                             class="d-md-flex gap-3 justify-content-md-start">
                                             <a th:href="@{/posts/{postId}/edit(postId=${post.id})}" class="btn btn-info">Изменить</a>
                                             <a th:href="@{/posts/{postId}/delete(postId=${post.id})}" class="btn btn-danger"
                                                onclick="return confirm('Вы уверены, что хотите удалить эту запись о ферме?')"

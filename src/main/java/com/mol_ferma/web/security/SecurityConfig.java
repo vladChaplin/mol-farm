@@ -1,5 +1,6 @@
 package com.mol_ferma.web.security;
 
+import com.mol_ferma.web.enums.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +33,16 @@ public class SecurityConfig {
 //        TODO: Нужно обязательно настроить csrf так как есть post методы на сайты, защита от подделки межсайтового запроса
         http.csrf(csrf -> csrf.configure(http))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/register/save", "/posts", "/posts/{postId}", "/assets/**")
+                        .requestMatchers("/login",
+                                "/register",
+                                "/register/save",
+                                "/posts",
+                                "/posts/{postId}",
+                                "/assets/**",
+                                "/favicon.ico")
                         .permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/regions/**"),
+                                new AntPathRequestMatcher("/regions")).hasRole(RoleName.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -46,16 +55,10 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .permitAll());
-                /*.logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                        .permitAll()
-                );*/
         return http.build();
     }
 
+    @Autowired
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }

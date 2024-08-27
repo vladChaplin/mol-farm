@@ -47,7 +47,6 @@ public class PostController {
 
     @GetMapping("/posts")
     public String listPosts(HttpServletRequest request, Model model) {
-
         UserEntity user = new UserEntity();
         List<PostDto> posts = postService.findAllPosts();
         String emailUser = SecurityUtil.getSessionUser();
@@ -64,8 +63,14 @@ public class PostController {
 
     @GetMapping("/posts/search")
     public String searchPost(@RequestParam(value = "title") String title, Model model) {
+        UserEntity user = new UserEntity();
+        String emailUser = SecurityUtil.getSessionUser();
+        if(emailUser != null) {
+            user = userService.findByEmail(emailUser);
+        }
         List<PostDto> posts = postService.searchPosts(title);
         model.addAttribute("posts", posts);
+        model.addAttribute("user", user);
         return "posts-list";
     }
 
@@ -135,15 +140,11 @@ public class PostController {
         }
 
         if(!postDto.isNullPhotoFile()) {
-
             MultipartFile image = postDto.getPhotoFile();
-
             if(!postDto.isNullPhotoUrl()) {
                 gcsStorageService.deleteFile(postDto.getPhotoUrl());
             }
-
             String fileUrl = FileUploadUtil.uploadFileToGCS(image, gcsStorageService);
-
             postDto.setPhotoUrl(fileUrl);
         }
 

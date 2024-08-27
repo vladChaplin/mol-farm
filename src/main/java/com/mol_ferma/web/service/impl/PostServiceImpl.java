@@ -57,8 +57,11 @@ public class PostServiceImpl implements PostService {
     public void updatePost(PostDto postDto) {
         String username = SecurityUtil.getSessionUser();
         UserEntity user = userRepository.findByEmail(username);
+//        todo: после изменения поста админом, изменяется владелец поста createdBy, изначального (пользователя)
         Post post = mapToPost(postDto);
-        post.setCreatedBy(user);
+        if(postDto.getCreatedBy() == null ) {
+            post.setCreatedBy(user);
+        }
 
         postRepository.save(post);
     }
