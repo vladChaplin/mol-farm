@@ -29,7 +29,7 @@
                 <td th:text="${region_row.name}"></td>
                 <td th:text="${region_row.latitude}"></td>
                 <td th:text="${region_row.longitude}"></td>
-                <td class="d-md-flex gap-3 justify-content-md-center">
+                <td class="d-grid gap-2 d-md-flex justify-content-md-start">
                     <a th:href="@{/regions/{regionId}/edit(regionId=${region_row.id})}" class="btn btn-info">Изменить</a>
                     <a th:href="@{/regions/{regionId}/delete(regionId=${region_row.id})}" class="btn btn-danger"
                        onclick="return confirm('Вы уверены, что хотите удалить этот регион?')"

@@ -47,13 +47,13 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">Ферма <span th:text="${post.getTitle()}"></span></h5>
+                                    <h5 class="card-title"><span th:text="${post.getTitle()}"></span></h5>
                                     <p class="card-text">Адрес: <span th:text="${post.getAddress()}"></span></p>
                                     <p class="card-text">Инфо: <span th:text="${post.getContent()}"></span></p>
-                                    <div class="d-md-flex gap-3 justify-content-md-start">
+                                    <div class="d-grid gap-3 d-md-flex justify-content-md-start">
                                         <a th:href="@{/posts/{postId}(postId=${post.id})}" class="btn btn-success">Подробнее</a>
                                         <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${user?.id == post?.createdBy?.id}"
-                                             class="d-md-flex gap-3 justify-content-md-start">
+                                             class="d-grid gap-3 d-md-flex justify-content-md-start">
                                             <a th:href="@{/posts/{postId}/edit(postId=${post.id})}" class="btn btn-info">Изменить</a>
                                             <a th:href="@{/posts/{postId}/delete(postId=${post.id})}" class="btn btn-danger"
                                                onclick="return confirm('Вы уверены, что хотите удалить эту запись о ферме?')"

@@ -18,6 +18,7 @@
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{photoUrl}">
         <input type="hidden" th:field="*{createdOn}">
+        <input type="hidden" th:field="*{createdBy}">
         <div class="mb-3">
           <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger" role="alert"></div>
           <label for="title" class="form-label">Название фермы</label>
