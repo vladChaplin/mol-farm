@@ -23,6 +23,6 @@ public class Region {
     private Double latitude;
     private Double longitude;
 
-    @OneToMany(mappedBy = "region")
+    @OneToMany(mappedBy = "region", cascade = CascadeType.REMOVE)
     private Set<Post> posts = new HashSet<>();
 }
