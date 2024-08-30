@@ -27,10 +27,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        TODO: Нужно обязательно настроить csrf так как есть post методы на сайты, защита от подделки межсайтового запроса
+//        TODO: Настроить csrf так как есть post методы на сайты, защита от подделки межсайтового запроса
         http.csrf(csrf -> csrf.configure(http))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login",
+                        .requestMatchers("/",
+                                "/login",
                                 "/register",
                                 "/register/save",
                                 "/posts",

@@ -22,7 +22,7 @@
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between mb-3 pt-2">
-                <a th:href="@{/posts}" class="text-nowrap logo-img">
+                <a th:href="@{/}" class="text-nowrap logo-img">
                     <img src="/assets/images/logos/logo-almaty.png" width="180" alt="logo almaty"/>
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -44,7 +44,8 @@
                         </a>
                     </li>
                     <li sec:authorize="!isAuthenticated()" class="sidebar-item">
-                        <a sec:authorize="!isAuthenticated()" class="sidebar-link" th:href="@{/login}" aria-expanded="false">
+                        <a sec:authorize="!isAuthenticated()" class="sidebar-link" th:href="@{/login}"
+                           aria-expanded="false">
                         <span>
                           <i class="ti ti-login"></i>
                         </span>
@@ -90,7 +91,8 @@
 
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <ul sec:authorize="isAuthenticated()" class="d-flex navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                    <ul sec:authorize="isAuthenticated()"
+                        class="d-flex navbar-nav flex-row ms-auto align-items-center justify-content-end">
 
                         <a th:href="${currentURI == '/posts/create'} ? ${currentURI} : @{/posts/new}"
                            class="btn btn-primary">Добавить ферму</a>
@@ -110,11 +112,15 @@
         <div layout:fragment="body"></div>
         <!--  Content End -->
 
-        <!--  Footer Start -->
-        <footer class="py-6 px-6 text-center">
-            <p class="mb-0 fs-4">Developed by <a href="https://github.com/vladChaplin" target="_blank"
-                                                 class="pe-1 text-primary text-decoration-underline">Vladislav
-                Chaplin</a></p>
+
+        <footer class="mt-auto py-6 px-6 text-center">
+            <p class="mb-0 fs-4">Developed by
+                <a href="https://github.com/vladChaplin"
+                   target="_blank"
+                   class="pe-1 text-primary text-decoration-underline">
+                    Vladislav Chaplin
+                </a>
+            </p>
         </footer>
         <!--  Footer End -->
     </div>

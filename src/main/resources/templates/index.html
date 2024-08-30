@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+  <title>Спасём урожай</title>
+</head>
+
+<body>
+<div layout:fragment="body" class="container main-container">
+  <div class="card text-bg-dark d-flex justify-content-center align-items-center position-relative">
+    <img src="/assets/images/bg_farm.jpg" class="card-img rounded" alt="Фон Алматы">
+    <div class="main-overlay"></div>
+    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center p-5">
+      <h5 class="display-5 text-white mb-3">Спасите урожай!</h5>
+      <p class="display-6 text-center mb-5">Главная цель проекта - дать возможность людям спасти урожай</p>
+      <a th:href="@{/posts}" class="btn btn-lg btn-success fw-bold main-button">Перейти к объявлениям</a>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="/assets/css/index.css">
+</div>
+</body>
+
+</html>
+
