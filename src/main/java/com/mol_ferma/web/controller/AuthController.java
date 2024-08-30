@@ -56,6 +56,6 @@ public class AuthController {
         user.setRole(RoleName.USER);
         userService.saveUser(user);
 
-        return "redirect:/posts?success";
+        return "redirect:/login?success";
     }
 }

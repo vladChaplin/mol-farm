@@ -14,10 +14,6 @@
 
     <div class="row">
 
-        <div th:if="${param.success}" class="alert alert-success mb-3" role="alert">
-            Вы успешно зарегистрировались! Теперь <a th:href="@{/login}" class="text-primary fw-bold ms-2">войдите в аккаунт</a> для создания фермы
-        </div>
-
         <div class="p-0">
             <form th:action="@{/posts/search}" class="form-inline">
                 <div class="input-group mb-3">

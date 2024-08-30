@@ -27,10 +27,13 @@
               </a>
               <p class="text-center">Вход в аккаунт</p>
               <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                Ошибка! Неверные данные <a th:href="@{/register}" class="text-primary fw-bold ms-2">Создайте аккаунт</a>
+                Ошибка! Неверные данные
               </div>
               <div th:if="${param.logout}" class="alert alert-success" role="alert">
                 Вы успешно вышли из аккаунта
+              </div>
+              <div th:if="${param.success}" class="alert alert-success" role="alert">
+                Вы успешно зарегистрировались. Чтобы продолжить работу, войдите в аккаунт
               </div>
               <form role="form" method="post" th:action="@{/login}">
                 <div class="mb-3">
@@ -42,6 +45,7 @@
                           type="email"
                           class="form-control"
                           aria-describedby="emailHelp"
+                          required
                   >
                 </div>
                 <div class="mb-4">
@@ -51,6 +55,7 @@
                           name="password"
                           type="password"
                           class="form-control"
+                          required
                   >
                 </div>
                 <!--<div class="d-flex align-items-center justify-content-between mb-4">

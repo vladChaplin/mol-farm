@@ -38,6 +38,7 @@
                                             id="firstName"
                                             aria-describedby="firstNameHelp"
                                             th:field="*{firstName}"
+                                            required
                                     >
                                 </div>
                                 <div class="mb-3">
@@ -48,6 +49,7 @@
                                             id="lastName"
                                             aria-describedby="lastNameHelp"
                                             th:field="*{lastName}"
+                                            required
                                     >
                                 </div>
                                 <div class="mb-3">
@@ -58,6 +60,7 @@
                                             id="email"
                                             aria-describedby="emailHelp"
                                             th:field="*{email}"
+                                            required
                                     >
                                 </div>
                                 <div class="mb-3">
@@ -68,6 +71,7 @@
                                             id="phoneNumber"
                                             aria-describedby="phoneNumberHelp"
                                             th:field="*{phoneNumber}"
+                                            required
                                     >
                                 </div>
                                 <div class="mb-4">
@@ -77,6 +81,7 @@
                                             class="form-control"
                                             id="password"
                                             th:field="*{password}"
+                                            required
                                     >
                                 </div>
                                 <button th:href="@{/register}" type="submit" id="submitBtn" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
