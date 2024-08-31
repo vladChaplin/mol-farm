@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="/assets/images/logos/favicon.png" />
     <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
+    <link rel="stylesheet" href="/assets/css/register.css">
     <title>Регистрация</title>
 </head>
 
@@ -92,18 +93,22 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="password" class="form-label">Пароль</label>
-                                    <input
-                                            type="password"
-                                            class="form-control"
-                                            id="password"
-                                            th:field="*{password}"
-                                            required
-                                    >
+                                    <p class="position-relative">
+                                        <input
+                                                type="password"
+                                                class="form-control"
+                                                id="password"
+                                                th:field="*{password}"
+                                                required
+                                        >
+                                        <i class="ti ti-eye pass-eye" id="togglePassword"></i>
+                                    </p>
                                     <div th:if="${#fields.hasErrors('password')}"
                                          th:errors="*{password}"
                                          class="alert alert-danger mt-3"
                                          role="alert"></div>
                                 </div>
+
                                 <button th:href="@{/register}" type="submit" id="submitBtn" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
                                     <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     <span id="buttonText">Зарегистрироваться</span>
@@ -124,7 +129,7 @@
 
 <!--<script src="/assets/js/form-edit-create-post.js"></script>-->
 
-
+<script src="/assets/js/showPassword.js"></script>
 <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/sidebarmenu.js"></script>

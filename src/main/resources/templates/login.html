@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/png" href="/assets/images/logos/favicon.png" />
   <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
+  <link rel="stylesheet" href="/assets/css/register.css">
   <title>Вход</title>
 </head>
 
@@ -50,13 +51,17 @@
                 </div>
                 <div class="mb-4">
                   <label for="password" class="form-label">Пароль</label>
-                  <input
-                          id="password"
-                          name="password"
-                          type="password"
-                          class="form-control"
-                          required
-                  >
+                  <p class="position-relative">
+                    <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            class="form-control"
+                            required
+                    >
+                    <i class="ti ti-eye pass-eye" id="togglePassword"></i>
+                  </p>
+
                 </div>
                 <!--<div class="d-flex align-items-center justify-content-between mb-4">
                   <div class="form-check">
@@ -93,6 +98,7 @@
 <!--<script src="/assets/js/form-edit-create-post.js"></script>-->
 
 
+<script src="/assets/js/showPassword.js"></script>
 <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/sidebarmenu.js"></script>

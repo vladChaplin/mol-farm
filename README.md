@@ -4,3 +4,6 @@ Java 21
 Spring framework 3.3
 Spring Web
 
+# Build project
+## mvn package -D maven.test.skip
+
