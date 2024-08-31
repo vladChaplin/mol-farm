@@ -13,9 +13,9 @@ import static java.lang.annotation.ElementType.*;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = PhoneNumberConstraintsValidator.class)
-public @interface ValidPhoneNumber {
-    String message() default "Некорректный формат номера телефона";
+@Constraint(validatedBy = EmailConstraintsValidator.class)
+public @interface ValidEmail {
+    String message() default "Некорректный формат Email";
     Class<?>[] groups() default {};
-    Class<?extends Payload> [] payload() default {};
+    Class<?extends Payload> [] payload() default{};
 }

@@ -40,6 +40,10 @@
                                             th:field="*{firstName}"
                                             required
                                     >
+                                    <div th:if="${#fields.hasErrors('firstName')}"
+                                         th:errors="*{firstName}"
+                                         class="alert alert-danger mt-3"
+                                         role="alert"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="lastName" class="form-label">Фамилия</label>
@@ -51,6 +55,10 @@
                                             th:field="*{lastName}"
                                             required
                                     >
+                                    <div th:if="${#fields.hasErrors('lastName')}"
+                                         th:errors="*{lastName}"
+                                         class="alert alert-danger mt-3"
+                                         role="alert"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">E-mail адрес</label>

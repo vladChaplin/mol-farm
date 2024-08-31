@@ -13,9 +13,9 @@ import static java.lang.annotation.ElementType.*;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = PhoneNumberConstraintsValidator.class)
-public @interface ValidPhoneNumber {
-    String message() default "Некорректный формат номера телефона";
+@Constraint(validatedBy = UserFirstnameConstrainsValidator.class)
+public @interface ValidUserFirstname {
+    String message() default "В имени или фамилии должны быть только латинские буквы или кириллицы";
     Class<?>[] groups() default {};
-    Class<?extends Payload> [] payload() default {};
+    Class<?extends Payload> [] payload()default {};
 }
