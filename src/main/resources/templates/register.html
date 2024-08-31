@@ -22,7 +22,7 @@
                 <div class="col-md-8 col-lg-6 col-xxl-3">
                     <div class="card mb-0">
                         <div class="card-body">
-                            <a th:href="@{/posts}" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                            <a th:href="@{/}" class="text-nowrap logo-img text-center d-block py-3 w-100">
                                 <img src="/assets/images/logos/logo-almaty.png" width="180" alt="logo almaty" />
                             </a>
                             <p class="text-center">Создание аккаунта</p>
@@ -62,6 +62,10 @@
                                             th:field="*{email}"
                                             required
                                     >
+                                    <div th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}"
+                                         class="alert alert-danger mt-3"
+                                         role="alert"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="phoneNumber" class="form-label">Мобильный телефон</label>
@@ -73,6 +77,10 @@
                                             th:field="*{phoneNumber}"
                                             required
                                     >
+                                    <div th:if="${#fields.hasErrors('phoneNumber')}"
+                                         th:errors="*{phoneNumber}"
+                                         class="alert alert-danger mt-3"
+                                         role="alert"></div>
                                 </div>
                                 <div class="mb-4">
                                     <label for="password" class="form-label">Пароль</label>
@@ -83,6 +91,10 @@
                                             th:field="*{password}"
                                             required
                                     >
+                                    <div th:if="${#fields.hasErrors('password')}"
+                                         th:errors="*{password}"
+                                         class="alert alert-danger mt-3"
+                                         role="alert"></div>
                                 </div>
                                 <button th:href="@{/register}" type="submit" id="submitBtn" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
                                     <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
