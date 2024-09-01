@@ -3,9 +3,13 @@ package com.mol_ferma.web.controller;
 import com.mol_ferma.web.dto.RegistrationDto;
 import com.mol_ferma.web.enums.RoleName;
 import com.mol_ferma.web.models.UserEntity;
+import com.mol_ferma.web.models.VerificationToken;
+import com.mol_ferma.web.repository.VerificationTokenRepository;
+import com.mol_ferma.web.service.EmailService;
 import com.mol_ferma.web.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +21,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthController {
     private UserService userService;
 
+    private VerificationTokenRepository verificationTokenRepository;
+    private EmailService emailService;
+
     @Autowired
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService,
+                          VerificationTokenRepository verificationTokenRepository,
+                          EmailService emailService) {
         this.userService = userService;
+        this.verificationTokenRepository = verificationTokenRepository;
+        this.emailService = emailService;
     }
 
     @GetMapping("/login")
@@ -34,7 +45,9 @@ public class AuthController {
         return "register";
     }
 
-    @PostMapping("/register/save")
+
+
+    /*@PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user") RegistrationDto user,
                            BindingResult result, Model model) {
         UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
@@ -57,5 +70,5 @@ public class AuthController {
         userService.saveUser(user);
 
         return "redirect:/login?success";
-    }
+    }*/
 }

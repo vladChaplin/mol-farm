@@ -1,10 +1,7 @@
 package com.mol_ferma.web.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,4 +31,7 @@ public class UserEntity {
     )
     private List<Role> roles = new ArrayList<>();
 
+    @Builder.Default
+    @Column(name = "enabled")
+    private boolean enabled = true;
 }
