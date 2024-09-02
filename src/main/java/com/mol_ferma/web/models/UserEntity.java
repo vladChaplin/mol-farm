@@ -6,9 +6,11 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "users")
 @Table(name = "users", schema = "farm_mvc")
 public class UserEntity {
@@ -30,7 +32,7 @@ public class UserEntity {
     )
     private List<Role> roles = new ArrayList<>();
 
-    private boolean enabled;
+    private Boolean enabled;
 
     public UserEntity(Long id, String firstName, String lastName, String username, String email, String password, String phoneNumber, List<Role> roles) {
         this.id = id;

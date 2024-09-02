@@ -9,7 +9,9 @@ import com.mol_ferma.web.service.EmailService;
 import com.mol_ferma.web.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import static com.mol_ferma.web.utils.mapper.UserEntityMapper.mapToUserEntity;
 
 @Controller
 public class AuthController {
@@ -44,30 +48,38 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String getRegisterForm(Model model) {
-        RegistrationDto user = new RegistrationDto();
-        model.addAttribute("user", user);
-        return "register";
+    public ModelAndView getRegisterForm(ModelAndView modelAndView, RegistrationDto registrationDto) {
+        modelAndView.addObject("user", registrationDto);
+        modelAndView.setViewName("register");
+        return modelAndView;
     }
 
     @PostMapping("/register")
     public ModelAndView registerUser(ModelAndView modelAndView, RegistrationDto registrationDto) {
         UserEntity existingUser = userService.findByEmail(registrationDto.getEmail());
-        if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
-              modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
-              modelAndView.setViewName("error");
+        if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
+            modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
+            modelAndView.setViewName("/register?fail");
+            return modelAndView;
 //            return "redirect:/register?fail";
         }
         UserEntity existingUserPhoneNumber = userService.findByPhoneNumber(registrationDto.getPhoneNumber());
 
-        if(existingUserPhoneNumber != null && existingUserPhoneNumber.getPhoneNumber() != null
+        if (existingUserPhoneNumber != null && existingUserPhoneNumber.getPhoneNumber() != null
                 && !existingUserPhoneNumber.getPhoneNumber().isEmpty()) {
             modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
             modelAndView.setViewName("error");
+            return modelAndView;
 //            return "redirect:/register?fail";
         }
 
+        userService.saveUser(registrationDto);
+        VerificationToken verificationToken = new VerificationToken(mapToUserEntity(registrationDto));
+        verificationTokenRepository.save(verificationToken);
 
+        userService.sendMessage(registrationDto, verificationToken.getConfirmationToken());
+        modelAndView.addObject("email", registrationDto.getEmail());
+        modelAndView.setViewName("successfulRegistration");
 
         return modelAndView;
     }

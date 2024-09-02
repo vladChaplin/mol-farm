@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,13 +23,22 @@ public class VerificationToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String token;
+    private String confirmationToken;
 
     @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
     private UserEntity user;
 
+    private LocalDateTime createdDate;
+
     private LocalDateTime expiryDate;
+
+    public VerificationToken(UserEntity userEntity) {
+        this.user = userEntity;
+        this.createdDate = LocalDateTime.now();
+        this.confirmationToken = UUID.randomUUID().toString();
+        this.expiryDate = calculateExpiryDate(EXPIRATION);
+    }
 
     private LocalDateTime calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar cal = Calendar.getInstance();

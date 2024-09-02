@@ -6,11 +6,19 @@ import com.mol_ferma.web.annotations.ValidPassword;
 import com.mol_ferma.web.annotations.ValidPhoneNumber;
 import com.mol_ferma.web.enums.RoleName;
 
+import com.mol_ferma.web.models.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.*;
+
+import java.util.List;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class RegistrationDto {
     private Long id;
     private String username;
@@ -29,6 +37,6 @@ public class RegistrationDto {
     @ValidPhoneNumber(message = "Пожалуйста, введите корректный номер телефона Казахстана, пример +77477730324")
     @NotEmpty
     private String phoneNumber;
-    private RoleName role;
-    private boolean enabled;
+    private Boolean enabled;
+    private List<Role> roles;
 }
