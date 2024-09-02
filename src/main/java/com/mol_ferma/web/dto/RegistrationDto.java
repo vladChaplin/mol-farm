@@ -30,4 +30,5 @@ public class RegistrationDto {
     @NotEmpty
     private String phoneNumber;
     private RoleName role;
+    private boolean enabled;
 }

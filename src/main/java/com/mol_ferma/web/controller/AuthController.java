@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AuthController {
@@ -24,6 +25,10 @@ public class AuthController {
     private VerificationTokenRepository verificationTokenRepository;
     private EmailService emailService;
 
+    /*@Autowired
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }*/
     @Autowired
     public AuthController(UserService userService,
                           VerificationTokenRepository verificationTokenRepository,
@@ -45,6 +50,27 @@ public class AuthController {
         return "register";
     }
 
+    @PostMapping("/register")
+    public ModelAndView registerUser(ModelAndView modelAndView, RegistrationDto registrationDto) {
+        UserEntity existingUser = userService.findByEmail(registrationDto.getEmail());
+        if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
+              modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
+              modelAndView.setViewName("error");
+//            return "redirect:/register?fail";
+        }
+        UserEntity existingUserPhoneNumber = userService.findByPhoneNumber(registrationDto.getPhoneNumber());
+
+        if(existingUserPhoneNumber != null && existingUserPhoneNumber.getPhoneNumber() != null
+                && !existingUserPhoneNumber.getPhoneNumber().isEmpty()) {
+            modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
+            modelAndView.setViewName("error");
+//            return "redirect:/register?fail";
+        }
+
+
+
+        return modelAndView;
+    }
 
 
     /*@PostMapping("/register/save")

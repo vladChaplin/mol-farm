@@ -8,7 +8,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "users")
 @Table(name = "users", schema = "farm_mvc")
@@ -31,7 +30,17 @@ public class UserEntity {
     )
     private List<Role> roles = new ArrayList<>();
 
-    @Builder.Default
-    @Column(name = "enabled")
-    private boolean enabled = true;
+    private boolean enabled;
+
+    public UserEntity(Long id, String firstName, String lastName, String username, String email, String password, String phoneNumber, List<Role> roles) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.roles = roles;
+        this.enabled = false;
+    }
 }
