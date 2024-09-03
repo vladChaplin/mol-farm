@@ -4,6 +4,7 @@ import com.mol_ferma.web.dto.RegistrationDto;
 import com.mol_ferma.web.models.UserEntity;
 import lombok.experimental.UtilityClass;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +20,7 @@ public class UserEntityMapper {
                 .email(registrationDto.getEmail())
                 .password(registrationDto.getPassword())
                 .phoneNumber(registrationDto.getPhoneNumber())
-                .roles(registrationDto.getRoles())
+                .roles(Arrays.asList(registrationDto.getRole()))
                 .enabled(registrationDto.getEnabled())
                 .build();
     }

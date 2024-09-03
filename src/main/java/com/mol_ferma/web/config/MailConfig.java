@@ -22,7 +22,7 @@ public class MailConfig {
     @Value("${spring.mail.password}")
     private String password;
 
-    @Value("${spring.mail.protocol")
+    @Value("${spring.mail.protocol}")
     private String protocol;
 
     @Value("${mail.debug}")

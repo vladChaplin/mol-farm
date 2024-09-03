@@ -30,7 +30,7 @@
                             <div th:if="${param.fail}" class="alert alert-danger" role="alert">
                                 Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!
                             </div>
-                            <form role="form" method="post" th:action="@{/register/save}" th:object="${user}">
+                            <form role="form" method="post" th:action="@{/register}" th:object="${user}">
                                 <div class="mb-3">
                                     <label for="firstName" class="form-label">Имя</label>
                                     <input

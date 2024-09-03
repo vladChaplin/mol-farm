@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(RegistrationDto registrationDto) {
+    public UserEntity saveUser(RegistrationDto registrationDto, RoleName roleName) {
         UserEntity user = new UserEntity();
 
         user.setEmail(registrationDto.getEmail());
@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService {
 
         user.setUsername(formatUsernameByEmail(user));
 
-        Role role = roleRepository.findByName(registrationDto.getRole()).get();
+        Role role = roleRepository.findByName(roleName);
         user.setRoles(Arrays.asList(role));
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

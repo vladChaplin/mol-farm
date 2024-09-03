@@ -38,5 +38,5 @@ public class RegistrationDto {
     @NotEmpty
     private String phoneNumber;
     private Boolean enabled;
-    private List<Role> roles;
+    private Role role;
 }

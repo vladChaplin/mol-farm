@@ -73,13 +73,15 @@ public class AuthController {
 //            return "redirect:/register?fail";
         }
 
-        userService.saveUser(registrationDto);
-        VerificationToken verificationToken = new VerificationToken(mapToUserEntity(registrationDto));
+
+
+        var userEntity = userService.saveUser(registrationDto, RoleName.USER);
+        VerificationToken verificationToken = new VerificationToken(userEntity);
         verificationTokenRepository.save(verificationToken);
 
         userService.sendMessage(registrationDto, verificationToken.getConfirmationToken());
         modelAndView.addObject("email", registrationDto.getEmail());
-        modelAndView.setViewName("successfulRegistration");
+        modelAndView.setViewName("successful-registration");
 
         return modelAndView;
     }
