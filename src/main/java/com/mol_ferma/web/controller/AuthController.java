@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import static com.mol_ferma.web.utils.mapper.UserEntityMapper.mapToUserEntity;
@@ -27,7 +28,6 @@ public class AuthController {
     private UserService userService;
 
     private VerificationTokenRepository verificationTokenRepository;
-    private EmailService emailService;
 
     /*@Autowired
     public AuthController(UserService userService) {
@@ -35,11 +35,9 @@ public class AuthController {
     }*/
     @Autowired
     public AuthController(UserService userService,
-                          VerificationTokenRepository verificationTokenRepository,
-                          EmailService emailService) {
+                          VerificationTokenRepository verificationTokenRepository) {
         this.userService = userService;
         this.verificationTokenRepository = verificationTokenRepository;
-        this.emailService = emailService;
     }
 
     @GetMapping("/login")
@@ -73,8 +71,6 @@ public class AuthController {
 //            return "redirect:/register?fail";
         }
 
-
-
         var userEntity = userService.saveUser(registrationDto, RoleName.USER);
         VerificationToken verificationToken = new VerificationToken(userEntity);
         verificationTokenRepository.save(verificationToken);
@@ -84,6 +80,20 @@ public class AuthController {
         modelAndView.setViewName("successful-registration");
 
         return modelAndView;
+    }
+
+    @GetMapping("/activate")
+    public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
+        VerificationToken verificationToken = verificationTokenRepository.findByConfirmationToken(confirmationToken);
+
+        if(verificationToken != null) {
+            UserEntity user = userService.findByEmail(verificationToken.getUser().getEmail());
+            user.setEnabled(true);
+            userService.saveUser(user);
+            return "redirect:/login?success";
+        } else {
+            return "redirect:/register?fail";
+        }
     }
 
 

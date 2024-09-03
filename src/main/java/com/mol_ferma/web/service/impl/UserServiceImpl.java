@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void saveUser(UserEntity user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
