@@ -25,6 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        boolean accountNonExpired = true;
+        boolean credentialsNonExpired = true;
+        boolean accountNonLocked = true;
+
         UserEntity user = userRepository.findFirstByEmail(email);
         if(user != null) {
             Set<GrantedAuthority> authorities = user.getRoles().stream()
@@ -34,6 +38,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             User authUser = new User(
                     user.getEmail(),
                     user.getPassword(),
+                    user.getEnabled(),
+                    accountNonExpired,
+                    credentialsNonExpired,
+                    accountNonLocked,
                     authorities
             );
             return authUser;

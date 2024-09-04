@@ -35,3 +35,7 @@ build/
 ## Google Cloud Storage ##
 src/main/java/com/mol_ferma/web/security/google-credentials.json
 **/google-credentials.json
+
+#Application properties
+src/main/resources/application-dev.properties
+**/application-dev.properties
