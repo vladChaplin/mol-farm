@@ -76,7 +76,9 @@
                         value="Log in"
                         type="submit"
                         id="submitBtn"
-                        class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
+                        class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+                        onclick="preload('spinner', 'buttonText')"
+                >
                   <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span id="buttonText">Войти</span>
                 </button>
@@ -95,10 +97,8 @@
 
 </body>
 
-<!--<script src="/assets/js/form-edit-create-post.js"></script>-->
-
-
-<script src="/assets/js/showPassword.js"></script>
+<script src="/assets/js/components/preloader.js"></script>
+<script src="/assets/js/components/showPassword.js"></script>
 <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/sidebarmenu.js"></script>

@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(ModelAndView modelAndView, RegistrationDto registrationDto) {
+    public String registerUser(Model model, RegistrationDto registrationDto) {
         UserEntity existingUser = userService.findByEmail(registrationDto.getEmail());
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
             return "redirect:/register?fail";
@@ -65,17 +65,13 @@ public class AuthController {
             return "redirect:/register?fail";
         }
 
-//        FIXME implement a more efficient verification method check mail
-
         var userEntity = userService.saveUser(registrationDto, RoleName.USER);
         VerificationToken verificationToken = new VerificationToken(userEntity);
         verificationTokenRepository.save(verificationToken);
 
         userService.sendMessage(registrationDto, verificationToken.getConfirmationToken());
 
-
-
-        modelAndView.addObject("email", registrationDto.getEmail());
+        model.addAttribute("emailName", registrationDto.getEmail());
 
         return "successful-registration";
     }
@@ -94,29 +90,4 @@ public class AuthController {
         }
     }
 
-
-    /*@PostMapping("/register/save")
-    public String register(@Valid @ModelAttribute("user") RegistrationDto user,
-                           BindingResult result, Model model) {
-        UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
-        if(existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()) {
-            return "redirect:/register?fail";
-        }
-        UserEntity existingUserPhoneNumber = userService.findByPhoneNumber(user.getPhoneNumber());
-
-        if(existingUserPhoneNumber != null && existingUserPhoneNumber.getPhoneNumber() != null
-                && !existingUserPhoneNumber.getPhoneNumber().isEmpty()) {
-            return "redirect:/register?fail";
-        }
-
-        if(result.hasErrors()) {
-            model.addAttribute("user", user);
-            return "register";
-        }
-
-        user.setRole(RoleName.USER);
-        userService.saveUser(user);
-
-        return "redirect:/login?success";
-    }*/
 }

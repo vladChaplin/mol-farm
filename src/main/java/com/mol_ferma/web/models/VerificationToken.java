@@ -40,6 +40,7 @@ public class VerificationToken {
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
+//    FIXME: Not correct method
     private LocalDateTime calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(LocalDateTime.now().getSecond());
