@@ -53,33 +53,31 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUser(ModelAndView modelAndView, RegistrationDto registrationDto) {
+    public String registerUser(ModelAndView modelAndView, RegistrationDto registrationDto) {
         UserEntity existingUser = userService.findByEmail(registrationDto.getEmail());
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
-            modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
-            modelAndView.setViewName("/register?fail");
-            return modelAndView;
-//            return "redirect:/register?fail";
+            return "redirect:/register?fail";
         }
         UserEntity existingUserPhoneNumber = userService.findByPhoneNumber(registrationDto.getPhoneNumber());
 
         if (existingUserPhoneNumber != null && existingUserPhoneNumber.getPhoneNumber() != null
                 && !existingUserPhoneNumber.getPhoneNumber().isEmpty()) {
-            modelAndView.addObject("message", "Пользователь с таким e-mail адресом или с таким мобильным номером уже существует!");
-            modelAndView.setViewName("error");
-            return modelAndView;
-//            return "redirect:/register?fail";
+            return "redirect:/register?fail";
         }
+
+//        FIXME implement a more efficient verification method check mail
 
         var userEntity = userService.saveUser(registrationDto, RoleName.USER);
         VerificationToken verificationToken = new VerificationToken(userEntity);
         verificationTokenRepository.save(verificationToken);
 
         userService.sendMessage(registrationDto, verificationToken.getConfirmationToken());
-        modelAndView.addObject("email", registrationDto.getEmail());
-        modelAndView.setViewName("successful-registration");
 
-        return modelAndView;
+
+
+        modelAndView.addObject("email", registrationDto.getEmail());
+
+        return "successful-registration";
     }
 
     @GetMapping("/activate")
