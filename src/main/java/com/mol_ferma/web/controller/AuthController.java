@@ -29,10 +29,6 @@ public class AuthController {
 
     private VerificationTokenRepository verificationTokenRepository;
 
-    /*@Autowired
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }*/
     @Autowired
     public AuthController(UserService userService,
                           VerificationTokenRepository verificationTokenRepository) {
@@ -89,5 +85,6 @@ public class AuthController {
             return "redirect:/register?fail";
         }
     }
+
 
 }
