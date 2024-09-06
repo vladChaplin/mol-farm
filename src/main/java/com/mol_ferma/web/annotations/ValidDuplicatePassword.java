@@ -20,3 +20,5 @@ public @interface ValidDuplicatePassword {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
+
+//FIXME: проверки совпадения паролей не работает!

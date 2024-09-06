@@ -13,4 +13,6 @@ public interface UserService {
     UserEntity findByPhoneNumber(String phoneNumber);
     void sendMessage(String email, String token);
     void sendMessageForChangePassword(String email, String token);
+
+    boolean changeUserPassword(UserEntity user, String password);
 }

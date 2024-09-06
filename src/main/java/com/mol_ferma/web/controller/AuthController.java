@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, RegistrationDto registrationDto) {
+    public String registerUser(Model model, RegistrationDto registrationDto, BindingResult result) {
         UserEntity existingUser = userService.findByEmail(registrationDto.getEmail());
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
             return "redirect:/register?fail";
@@ -59,6 +59,11 @@ public class AuthController {
         if (existingUserPhoneNumber != null && existingUserPhoneNumber.getPhoneNumber() != null
                 && !existingUserPhoneNumber.getPhoneNumber().isEmpty()) {
             return "redirect:/register?fail";
+        }
+
+        if(result.hasErrors()) {
+            model.addAttribute("user", registrationDto);
+            return "register";
         }
 
         var userEntity = userService.saveUser(registrationDto, RoleName.USER);

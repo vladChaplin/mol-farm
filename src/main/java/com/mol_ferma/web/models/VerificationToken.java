@@ -25,7 +25,7 @@ public class VerificationToken {
 
     private String confirmationToken;
 
-    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
     private UserEntity user;
 

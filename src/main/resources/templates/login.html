@@ -36,6 +36,9 @@
               <div th:if="${param.success}" class="alert alert-success" role="alert">
                 Вы успешно зарегистрировались. Чтобы продолжить работу, войдите в аккаунт
               </div>
+              <div th:if="${param.successChangePassword}" class="alert alert-success" role="alert">
+                Вы успешно сменили пароль. Чтобы продолжить работу, войдите в аккаунт
+              </div>
               <form role="form" method="post" th:action="@{/login}">
                 <div class="mb-3">
                   <label for="email" class="form-label">E-mail адрес</label>

@@ -1,8 +1,6 @@
 package com.mol_ferma.web.dto;
 
-import com.mol_ferma.web.annotations.ValidDuplicatePassword;
 import com.mol_ferma.web.annotations.ValidEmail;
-import com.mol_ferma.web.annotations.ValidPassword;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,13 +11,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ForgotPasswordForm {
-    @ValidPassword
+public class ForgotEmailForm {
+    @ValidEmail(message = "Адрес электронной почты, должен соответствовать формату pochta@gmail.com")
     @NotEmpty
-    private String password;
-
-    @ValidDuplicatePassword
-    @NotEmpty
-    private String duplicatePassword;
-
+    private String email;
 }
