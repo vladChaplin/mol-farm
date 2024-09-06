@@ -17,7 +17,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "verification_token",schema = "farm_mvc")
 public class VerificationToken {
-    private static final int EXPIRATION = 60 * 24;
+    private static final long EXPIRATION = 60 * 24;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,12 +40,8 @@ public class VerificationToken {
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
-//    FIXME: Not correct method
-    private LocalDateTime calculateExpiryDate(int expiryTimeInMinutes) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(LocalDateTime.now().getSecond());
-        cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-        return LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId());
+    private LocalDateTime calculateExpiryDate(long expiryTimeInMinutes) {
+        return LocalDateTime.now().plusMinutes(expiryTimeInMinutes);
     }
 }
 
