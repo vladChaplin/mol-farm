@@ -28,6 +28,9 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     private EmailService emailService;
 
+    @Value("${custom.protocol.name}")
+    private String protocolProject;
+
     @Value("${hostname}")
     private String hostname;
 
@@ -73,19 +76,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendMessage(RegistrationDto registrationDto, String token) {
-        if(!StringUtils.isEmpty(registrationDto.getEmail())) {
+    public void sendMessage(String email, String token) {
+        if(email != null && !email.isEmpty()) {
             String message = String.format(
                     "Чтобы завершить регистрацию! " +
-                            "Подтвердите аккаунт, нажав на ссылку..." +
-                            "http://%s/activate?token=%s",
+                            "Подтвердите аккаунт, нажав на ссылку: " +
+                            "%s://%s/activate?token=%s",
+                    protocolProject,
                     hostname,
                     token
             );
 
-            emailService.sendEmailMessage(registrationDto.getEmail(),
+            emailService.sendEmailMessage(email,
                     "Активация аккаунта",
                     message);
         }
+    }
+
+    @Override
+    public void sendMessageForChangePassword(String email, String token) {
+        if(email != null && !email.isEmpty()) {
+            String message = String.format(
+                    "Чтобы сбросить пароль, нажмите на ссылку: " +
+                    "%s://%s/changePassword?token=%s",
+                    protocolProject,
+                    hostname,
+                    token
+            );
+
+            emailService.sendEmailMessage(email, "Сброс пароля", message);
+        }
+
     }
 }

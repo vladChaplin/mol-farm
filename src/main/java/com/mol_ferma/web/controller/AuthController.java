@@ -65,13 +65,14 @@ public class AuthController {
         VerificationToken verificationToken = new VerificationToken(userEntity);
         verificationTokenRepository.save(verificationToken);
 
-        userService.sendMessage(registrationDto, verificationToken.getConfirmationToken());
+        userService.sendMessage(registrationDto.getEmail(), verificationToken.getConfirmationToken());
 
         model.addAttribute("emailName", registrationDto.getEmail());
 
         return "successful-registration";
     }
 
+//    TODO: UPDATE method check expired token datetime
     @GetMapping("/activate")
     public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
         VerificationToken verificationToken = verificationTokenRepository.findByConfirmationToken(confirmationToken);

@@ -12,6 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDateTime;
 
 @Controller
 public class ForgotPasswordController {
@@ -38,12 +41,26 @@ public class ForgotPasswordController {
         if(result.hasErrors()) return "forgot-password";
 
         var user = userService.findByEmail(forgotPasswordForm.getEmail());
-
         if(user == null) return "redirect:/forgotPassword?notExistUser";
+        VerificationToken token = new VerificationToken(user);
+        verificationTokenRepository.save(token);
+        userService.sendMessageForChangePassword(user.getEmail(), token.getConfirmationToken());
 
         System.out.println(user);
 
         return "successful-registration";
+    }
+
+    @GetMapping("/changePassword")
+    public String changePasswordUser(@RequestParam("token") String confirmationToken) {
+        var token = verificationTokenRepository.findByConfirmationToken(confirmationToken);
+        var currentDateTime = LocalDateTime.now();
+
+        if(token == null) return "redirect:/changePasswordError?tokenNotExist";
+
+        if(!currentDateTime.isBefore(token.getExpiryDate())) return "redirect:/changePasswordError?expired";
+        
+        return "change-password";
     }
 }
 

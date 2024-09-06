@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/",
                                 "/login",
                                 "/forgotPassword",
+                                "/changePassword",
                                 "/activate",
                                 "/register",
                                 "/register/save",

@@ -11,5 +11,6 @@ public interface UserService {
     void saveUser(UserEntity user);
     UserEntity findByEmail(String email);
     UserEntity findByPhoneNumber(String phoneNumber);
-    void sendMessage(RegistrationDto registrationDto, String token);
+    void sendMessage(String email, String token);
+    void sendMessageForChangePassword(String email, String token);
 }
