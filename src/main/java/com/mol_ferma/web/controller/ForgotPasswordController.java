@@ -52,15 +52,18 @@ public class ForgotPasswordController {
     }
 
     @GetMapping("/changePassword")
-    public String changePasswordUser(@RequestParam("token") String confirmationToken) {
+    public String showChangePasswordUser(@RequestParam("token") String confirmationToken) {
         var token = verificationTokenRepository.findByConfirmationToken(confirmationToken);
         var currentDateTime = LocalDateTime.now();
 
         if(token == null) return "redirect:/changePasswordError?tokenNotExist";
 
         if(!currentDateTime.isBefore(token.getExpiryDate())) return "redirect:/changePasswordError?expired";
-        
+
         return "change-password";
     }
+
+    @PostMapping("/changePassword")
+    public String changePasswordUser(@RequestParam("token") String confirmationToken, )
 }
 
