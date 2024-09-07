@@ -1,7 +1,5 @@
 package com.mol_ferma.web.annotations;
 
-
-import com.mol_ferma.web.utils.service.ValidationLoggingService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,6 @@ public class PasswordConstraintsValidator implements ConstraintValidator<ValidPa
     private static final Pattern LOWERCASE_PATTERN = Pattern.compile("[a-z]");
     private static final Pattern DIGIT_PATTERN = Pattern.compile("\\d");
 
-    @Autowired
-    private ValidationLoggingService validationLoggingService;
-
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
@@ -26,7 +21,6 @@ public class PasswordConstraintsValidator implements ConstraintValidator<ValidPa
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        validationLoggingService.setValidationValue(password);
 
         if(password == null) return false;
 

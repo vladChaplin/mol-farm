@@ -9,16 +9,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.ElementType.TYPE;
 
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+@Target(TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = DuplicatePasswordConstraint.class)
-public @interface ValidDuplicatePassword {
+@Constraint(validatedBy = PasswordMatchesConstraint.class)
+public @interface ValidPasswordMatches {
     String message() default "Пароли должны совпадать!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
-
-//FIXME: проверки совпадения паролей не работает!
