@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/png" href="/assets/images/logos/favicon.png" />
   <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
-  <link rel="stylesheet" href="/assets/css/register.css">
+  <link rel="stylesheet" href="/assets/css/input-password.css">
   <title>Вход</title>
 </head>
 
@@ -39,7 +39,7 @@
               <div th:if="${param.successChangePassword}" class="alert alert-success" role="alert">
                 Вы успешно сменили пароль. Чтобы продолжить работу, войдите в аккаунт
               </div>
-              <form role="form" method="post" th:action="@{/login}">
+              <form id="formPreload" role="form" method="post" th:action="@{/login}">
                 <div class="mb-3">
                   <label for="email" class="form-label">E-mail адрес</label>
 <!--                  Spring Security берёт почту, как username, но внутри метода loadUserByUsername поиск производит по Email-->
@@ -59,10 +59,10 @@
                             id="password"
                             name="password"
                             type="password"
-                            class="form-control"
+                            class="form-control password"
                             required
                     >
-                    <i class="ti ti-eye pass-eye" id="togglePassword"></i>
+                    <i class="ti ti-eye pass-eye togglePassword"></i>
                   </p>
 
                 </div>
@@ -80,7 +80,6 @@
                         type="submit"
                         id="submitBtn"
                         class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
-                        onclick="preload('spinner', 'buttonText')"
                 >
                   <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span id="buttonText">Войти</span>

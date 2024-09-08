@@ -34,6 +34,7 @@ public class SecurityConfig {
                                 "/login",
                                 "/forgotPassword",
                                 "/changePassword",
+                                "/changePasswordError",
                                 "/activate",
                                 "/register",
                                 "/register/save",

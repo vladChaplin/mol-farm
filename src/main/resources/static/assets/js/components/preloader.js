@@ -5,3 +5,11 @@ function preload(idSpinner, idButtonText) {
     spinner.classList.remove('d-none');
     buttonText.textContent = 'Загрузка...';
 }
+
+const form = document.getElementById('formPreload');
+const submitButton = document.getElementById('submitBtn');
+
+form.addEventListener('submit', function(event) {
+    submitButton.disabled = true;
+    preload('spinner', 'buttonText')
+} );

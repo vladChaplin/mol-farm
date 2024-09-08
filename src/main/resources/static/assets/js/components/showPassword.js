@@ -1,6 +1,6 @@
 const togglePassword = document
-    .querySelector('#togglePassword');
-const password = document.querySelector('#password');
+    .querySelector('.togglePassword');
+const password = document.querySelector('.password');
 togglePassword.addEventListener('click', () => {
     const type = password
         .getAttribute('type') === 'password' ?
