@@ -56,7 +56,10 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .permitAll());
+                        .permitAll())
+                .oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/posts", true);
         return http.build();
     }
 
