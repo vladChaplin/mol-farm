@@ -15,4 +15,5 @@ public interface UserService {
     void sendMessageForChangePassword(String email, String token);
 
     boolean changeUserPassword(UserEntity user, String password);
+    String saveUserByOAuth();
 }

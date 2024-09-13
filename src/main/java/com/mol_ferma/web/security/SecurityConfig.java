@@ -4,9 +4,11 @@ import com.mol_ferma.web.enums.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,7 +30,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        TODO: Настроить csrf так как есть post методы на сайты, защита от подделки межсайтового запроса
-        http.csrf(csrf -> csrf.configure(http))
+        http
+                .csrf(csrf -> csrf.configure(http))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/",
                                 "/login",
@@ -54,9 +57,14 @@ public class SecurityConfig {
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/login/oauth2")
+                        .authorizationEndpoint(authorization -> authorization
+                                .baseUri("/login/oauth2/authorization")))
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .permitAll());
+                        .permitAll()
+                );
         return http.build();
     }
 

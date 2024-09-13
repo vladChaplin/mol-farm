@@ -73,7 +73,6 @@
                       Не выходить из системы
                     </label>
                   </div>
-                  <a class="text-primary fw-bold" href="./index.html">Забыли пароль ?</a>
                 </div>-->
                 <button
                         value="Log in"
@@ -92,7 +91,10 @@
                   <p class="fs-4 mb-0 fw-bold">Забыли пароль?</p>
                   <a th:href="@{/forgotPassword}" class="text-primary fw-bold ms-2">Восстановите пароль</a>
                 </div>
-
+                <a class="btn"
+                    th:href="@{/login/oauth2}">
+                  <i class="ti ti-brand-google"></i>
+                </a>
               </form>
             </div>
           </div>

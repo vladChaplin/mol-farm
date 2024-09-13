@@ -8,13 +8,20 @@ import com.mol_ferma.web.repository.RoleRepository;
 import com.mol_ferma.web.repository.UserRepository;
 import com.mol_ferma.web.service.EmailService;
 import com.mol_ferma.web.service.UserService;
+import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -114,5 +121,34 @@ public class UserServiceImpl implements UserService {
         if(password == null) return false;
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user) != null;
+    }
+
+    @Override
+    public String saveUserByOAuth() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication instanceof OAuth2AuthenticationToken oauthToken) {
+            OAuth2User oAuth2User = oauthToken.getPrincipal();
+            if(oAuth2User != null) {
+                Map<String, Object> attributes = oAuth2User.getAttributes();
+                var email = (String) attributes.get("email");
+                var userCurrent = userRepository.findByEmail(email);
+
+                if(userCurrent == null) {
+                    UserEntity user = new UserEntity();
+                    user.setId(Long.parseLong((String) attributes.get("sub")));
+                    user.setEnabled(true);
+                    user.setEmail(email);
+                    user.setFirstName((String) attributes.get("given_name"));
+                    user.setLastName((String) attributes.get("family_name"));
+                    user.setPhoneNumber((String) attributes.get("phone"));
+                    user.setPassword(passwordEncoder.encode((CharSequence) attributes.get("token")));
+                    var role = roleRepository.findByName(RoleName.USER);
+                    user.setRoles(Arrays.asList(role));
+
+                }
+            }
+        }
+//        TODO: ДОПИЛИТЬ метод
+        return "";
     }
 }

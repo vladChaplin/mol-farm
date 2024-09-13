@@ -7,3 +7,13 @@ togglePassword.addEventListener('click', () => {
         'text' : 'password';
     password.setAttribute('type', type);
 });
+
+const duplicatePassword = document.querySelector('.togglePasswordDuplicate');
+if(duplicatePassword != null) {
+    const passwordElem = document.querySelector('.passwordDuplicate');
+    duplicatePassword.addEventListener('click', () => {
+        const typeElem = passwordElem.getAttribute('type') === 'password' ?
+            'text' : 'password';
+        passwordElem.setAttribute('type', typeElem);
+    })
+}

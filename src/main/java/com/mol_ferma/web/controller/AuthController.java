@@ -41,6 +41,11 @@ public class AuthController {
         return "login";
     }
 
+    @GetMapping("/login/oauth2")
+    public String googleAuth() {
+        return "login-oauth2";
+    }
+
     @GetMapping("/register")
     public ModelAndView getRegisterForm(ModelAndView modelAndView, RegistrationDto registrationDto) {
         modelAndView.addObject("user", registrationDto);
